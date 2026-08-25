@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "perky",
+	"version": "${version}",
+	"name": "Perky",
+	"description": "lets get perky bruh",
+	"authors": [
+		"agmas",
+		"KognitionMC"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/perky/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "org.agmas.Perky"
+		],
+		"client": [
+			"org.agmas.client.PerkyClient"
+		],
+		"fabric-datagen": [
+			"org.agmas.client.PerkyDatagen"
+		]
+	},
+	"mixins": [
+		"perky.mixins.json",
+		{
+			"config": "perky.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "${minecraft_version}",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

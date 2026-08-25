@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "stepping-on-endshells:item/ender_essence"
+  }
+}
