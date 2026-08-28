@@ -1,13 +1,11 @@
-package org.agmas.client.mixin;
+package org.agmas.client.mixin.newRenderingEngineMixins;
 
 
+//? if >=1.21.11 {
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.HumanoidArm;
-import org.agmas.Perky;
-import org.agmas.attachment.PerkyItem;
 import org.agmas.client.PerkyRenderKeys;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-//? if >=1.21.11 {
 @Mixin(HumanoidModel.class)
 public class AvatarModelMixin {
 	@Shadow

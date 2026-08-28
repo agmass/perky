@@ -9,13 +9,13 @@ import org.agmas.porting.PPIdentifier;
 
 import java.util.ArrayList;
 
-public class PlayerAttachment {
+public class PerkyPlayerAttachment {
 
     public ArrayList<PerkyItem> appliedItems = new ArrayList<>();
 
-    public static StreamCodec<ByteBuf, PlayerAttachment> STREAM_CODEC = new StreamCodec<ByteBuf, PlayerAttachment>() {
-        public PlayerAttachment decode(ByteBuf byteBuf) {
-            PlayerAttachment playerAttachment = new PlayerAttachment();
+    public static StreamCodec<ByteBuf, PerkyPlayerAttachment> STREAM_CODEC = new StreamCodec<ByteBuf, PerkyPlayerAttachment>() {
+        public PerkyPlayerAttachment decode(ByteBuf byteBuf) {
+            PerkyPlayerAttachment playerAttachment = new PerkyPlayerAttachment();
             while (byteBuf.isReadable()) {
                 String id = Utf8String.read(byteBuf,32767);
                 playerAttachment.appliedItems.add(ModRegistries.PERKY_ITEM.getOptional(PPIdentifier.parse(id).id).get());
@@ -23,7 +23,7 @@ public class PlayerAttachment {
             return playerAttachment;
         }
 
-        public void encode(ByteBuf byteBuf, PlayerAttachment perkyAttachment) {
+        public void encode(ByteBuf byteBuf, PerkyPlayerAttachment perkyAttachment) {
             for (PerkyItem item : perkyAttachment.appliedItems) {
                 Utf8String.write(byteBuf, PerkyItem.getKey(item).id.toString(), 32767);
             }

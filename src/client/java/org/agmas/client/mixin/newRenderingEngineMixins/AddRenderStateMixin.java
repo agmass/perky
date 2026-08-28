@@ -1,10 +1,9 @@
-package org.agmas.client.mixin;
+package org.agmas.client.mixin.newRenderingEngineMixins;
 
 //? if >=1.21.11 {
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
-//? }
 import org.agmas.Perky;
 import org.agmas.attachment.PerkyItem;
 import org.agmas.client.PerkyRenderKeys;
@@ -13,10 +12,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
-
-//? if >=1.21.11 {
 @Mixin(AvatarRenderer.class)
 public class AddRenderStateMixin {
 	@Inject(at = @At("TAIL"), method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V")

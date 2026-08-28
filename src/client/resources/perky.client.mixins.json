@@ -3,9 +3,8 @@
   "package": "org.agmas.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "AddRenderStateMixin",
-    "AvatarModelMixin",
-    "ExampleClientMixin"
+    "newRenderingEngineMixins.AddRenderStateMixin",
+    "newRenderingEngineMixins.AvatarModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

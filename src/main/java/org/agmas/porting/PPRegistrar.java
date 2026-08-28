@@ -3,13 +3,9 @@ package org.agmas.porting;
 //? if >=26.1 {
 /*import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
  *///? } else {
-import io.netty.buffer.ByteBuf;
-import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
-import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 //? }
 //? if >1.20.4 {
-import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
 //? }
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -20,8 +16,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import org.agmas.Perky;
-import org.agmas.attachment.PlayerAttachment;
 
 import java.util.function.Function;
 
