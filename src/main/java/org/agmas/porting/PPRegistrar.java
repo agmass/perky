@@ -9,8 +9,8 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 //? }
 //? if >1.20.4 {
-/*import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
-*///? }
+import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
+//? }
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -31,19 +31,24 @@ public class PPRegistrar {
 
         Block block = blockFactory.apply(properties
                 //? if >=1.21.4 {
-                /*.setId(keyOfBlock(name))
-                 *///? }
+                .setId(keyOfBlock(name))
+                 //? }
         );
 
         if (shouldRegisterItem) {
             registerItem(name, (b)->{return new BlockItem(block, b);}, new Item.Properties()
                     //? if >=1.21.4 {
-                    /*.setId(keyOfItem(name)).useBlockDescriptionPrefix()
-                     *///? }
+                    .setId(keyOfItem(name)).useBlockDescriptionPrefix()
+                     //? }
             , tab);
         }
 
         return Registry.register(BuiltInRegistries.BLOCK, PPIdentifier.of(name).id, block);
+    }
+
+
+    public static <T> ResourceKey<Registry<T>> createRegistryKey(String string) {
+        return ResourceKey.createRegistryKey(PPIdentifier.of(string).id);
     }
 
     public static <T extends Item> T registerItem(String name, Function<Item.Properties, T> itemFactory, Item.Properties settings, ResourceKey<CreativeModeTab> tab) {
@@ -51,8 +56,8 @@ public class PPRegistrar {
 
         T item = itemFactory.apply(settings
                 //? if >=1.21.4 {
-                /*.setId(itemKey)
-                 *///? }
+                .setId(itemKey)
+                 //? }
         );
 
         Registry.register(BuiltInRegistries.ITEM, itemKey, item);
@@ -71,13 +76,13 @@ public class PPRegistrar {
 
 
     //? if >=1.21.4 {
-    /*private static ResourceKey<Block> keyOfBlock(String name) {
+    private static ResourceKey<Block> keyOfBlock(String name) {
         return ResourceKey.create(Registries.BLOCK, PPIdentifier.of(name).id);
     }
 
     private static ResourceKey<Item> keyOfItem(String name) {
         return ResourceKey.create(Registries.ITEM, PPIdentifier.of(name).id);
     }
-    *///? }
+    //? }
 
 }
