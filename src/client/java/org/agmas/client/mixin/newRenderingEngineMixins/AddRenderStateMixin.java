@@ -1,5 +1,9 @@
 package org.agmas.client.mixin.newRenderingEngineMixins;
 
+import net.fabricmc.loader.impl.util.log.Log;
+import net.fabricmc.loader.impl.util.log.LogCategory;
+import net.minecraft.client.Minecraft;
+import org.spongepowered.asm.mixin.Mixin;
 //? if >=1.21.11 {
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
@@ -7,7 +11,6 @@ import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import org.agmas.Perky;
 import org.agmas.attachment.PerkyItem;
 import org.agmas.client.PerkyRenderKeys;
-import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -28,4 +31,8 @@ public class AddRenderStateMixin {
 		}
 	}
 }
-//? }
+//? } else {
+/*
+@Mixin(Minecraft.class)
+public class AddRenderStateMixin {}
+*///? }

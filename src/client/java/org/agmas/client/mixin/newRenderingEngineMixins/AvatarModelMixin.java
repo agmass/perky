@@ -1,6 +1,8 @@
 package org.agmas.client.mixin.newRenderingEngineMixins;
 
 
+import net.minecraft.client.Minecraft;
+import org.spongepowered.asm.mixin.Mixin;
 //? if >=1.21.11 {
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -8,7 +10,6 @@ import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.HumanoidArm;
 import org.agmas.client.PerkyRenderKeys;
 import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -45,8 +46,7 @@ public class AvatarModelMixin {
 		if (humanoidRenderState.mainArm == HumanoidArm.RIGHT) {
 			leftArm.visible = leftArm.visible && humanoidRenderState.getDataOrDefault(PerkyRenderKeys.shouldRenderOffArm, true);
 			rightArm.visible = rightArm.visible && humanoidRenderState.getDataOrDefault(PerkyRenderKeys.shouldRenderMainArm, true);
-		}
-		if (humanoidRenderState.mainArm == HumanoidArm.RIGHT) {
+		} else {
 			leftArm.visible = leftArm.visible && humanoidRenderState.getDataOrDefault(PerkyRenderKeys.shouldRenderMainArm, true);
 			rightArm.visible = rightArm.visible && humanoidRenderState.getDataOrDefault(PerkyRenderKeys.shouldRenderOffArm, true);
 		}
@@ -56,4 +56,8 @@ public class AvatarModelMixin {
 		head.visible = head.visible && humanoidRenderState.getDataOrDefault(PerkyRenderKeys.shouldRenderHead, true);
 	}
 }
-//? }
+//? } else {
+/*
+@Mixin(Minecraft.class)
+public class AvatarModelMixin {}
+*///? }

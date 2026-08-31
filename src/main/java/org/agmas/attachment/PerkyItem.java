@@ -1,22 +1,25 @@
 package org.agmas.attachment;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.*;
 import org.agmas.init.ModRegistries;
 import org.agmas.porting.PPIdentifier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PerkyItem {
 
-    public int worth = 0;
-    public AttributeMap attributes  = new AttributeMap(AttributeSupplier.builder().build());
+    public int worth;
+    public List<AttributePair> attributes;
 
     public PerkyItem(int worth) {
         this.worth = worth;
     }
 
-    public PerkyItem(int worth, AttributeMap permanentAttributes) {
+    public PerkyItem(int worth, List<AttributePair> permanentAttributes) {
         this(worth);
         attributes = permanentAttributes;
     }
@@ -31,5 +34,15 @@ public class PerkyItem {
 
     public static PPIdentifier getKey(PerkyItem item) {
         return item == null ? null : new PPIdentifier(ModRegistries.PERKY_ITEM.getKey(item));
+    }
+
+    public static class AttributePair {
+        public Holder<Attribute> holder;
+        public AttributeModifier modifier;
+
+        public AttributePair(Holder<Attribute> holder, AttributeModifier modifier) {
+            this.holder = holder;
+            this.modifier = modifier;
+        }
     }
 }

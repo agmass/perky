@@ -4,6 +4,7 @@ package org.agmas.attachment;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.Utf8String;
 import net.minecraft.network.codec.StreamCodec;
+import org.agmas.Perky;
 import org.agmas.init.ModRegistries;
 import org.agmas.porting.PPIdentifier;
 
@@ -18,10 +19,16 @@ public class PerkyPlayerAttachment {
             PerkyPlayerAttachment playerAttachment = new PerkyPlayerAttachment();
             while (byteBuf.isReadable()) {
                 String id = Utf8String.read(byteBuf,32767);
-                playerAttachment.appliedItems.add(ModRegistries.PERKY_ITEM.getOptional(PPIdentifier.parse(id).id).get());
+                if (id.equals("")) break;
+
+                if (ModRegistries.PERKY_ITEM.getOptional(PPIdentifier.parse(id).id).isPresent()) {
+                    playerAttachment.appliedItems.add(ModRegistries.PERKY_ITEM.getOptional(PPIdentifier.parse(id).id).get());
+                }
             }
             return playerAttachment;
         }
+
+
 
         public void encode(ByteBuf byteBuf, PerkyPlayerAttachment perkyAttachment) {
             for (PerkyItem item : perkyAttachment.appliedItems) {

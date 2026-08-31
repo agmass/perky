@@ -20,6 +20,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class PerkyItemArgument implements ArgumentType<PerkyItem> {
 
+    public static PPIdentifier identifier = PPIdentifier.of("perky_item_argument");
+
     public PerkyItemArgument() {
     }
 
@@ -30,22 +32,22 @@ public class PerkyItemArgument implements ArgumentType<PerkyItem> {
 
     @Override
     public PerkyItem parse(StringReader reader) throws CommandSyntaxException {
-        return getItem(reader.readString());
+        return getItem(PPIdentifier.read(reader));
     }
 
     @Override
     public <S> PerkyItem parse(StringReader reader, S source) throws CommandSyntaxException {
-        return getItem(reader.readString());
+        return getItem(PPIdentifier.read(reader));
     }
 
-    PerkyItem getItem(String string) {
+    PerkyItem getItem(PPIdentifier identifier) {
         //? if >=1.21.11 {
-        return ModRegistries.PERKY_ITEM.getValue(PPIdentifier.parse(string).id);
+        return ModRegistries.PERKY_ITEM.getValue(identifier.id);
          //? } else {
         /*//? if >=1.21.4 {
-        return ModRegistries.PERKY_ITEM.get(PPIdentifier.parse(string).id).get().value();
+        return ModRegistries.PERKY_ITEM.get(identifier.id).get().value();
         //? } else {
-        /^return ModRegistries.PERKY_ITEM.get(PPIdentifier.parse(string).id);
+        /^return ModRegistries.PERKY_ITEM.get(identifier.id);
         ^///? }
         *///? }
     }

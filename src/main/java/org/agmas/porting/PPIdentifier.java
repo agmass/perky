@@ -1,6 +1,8 @@
 package org.agmas.porting;
 
 //? if >=1.21.11 {
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.resources.Identifier;
 //? } else {
 /*import net.minecraft.resources.ResourceLocation;
@@ -33,6 +35,9 @@ public class PPIdentifier {
     public static PPIdentifier ofVanilla(String path) {
         return new PPIdentifier(Identifier.fromNamespaceAndPath("minecraft", path));
     }
+    public static PPIdentifier read(StringReader stringReader) throws CommandSyntaxException {
+        return new PPIdentifier(Identifier.read(stringReader));
+    }
     //? } else if >1.20.4 {
     /*public static PPIdentifier of(String path) {
         return new PPIdentifier(ResourceLocation.fromNamespaceAndPath(Perky.MOD_ID, path));
@@ -42,6 +47,9 @@ public class PPIdentifier {
     }
     public static PPIdentifier ofVanilla(String path) {
         return new PPIdentifier(ResourceLocation.fromNamespaceAndPath("minecraft", path));
+    }
+    public static PPIdentifier read(StringReader stringReader) throws CommandSyntaxException {
+        return new PPIdentifier(ResourceLocation.read(stringReader));
     }
     *///? } else {
     
@@ -53,6 +61,9 @@ public class PPIdentifier {
     }
     public static PPIdentifier ofVanilla(String path) {
         return new PPIdentifier(ResourceLocation.tryParse("minecraft:" + path));
+    }
+    public static PPIdentifier read(StringReader stringReader) throws CommandSyntaxException {
+        return new PPIdentifier(ResourceLocation.read(stringReader));
     }
     *///? }
 }
