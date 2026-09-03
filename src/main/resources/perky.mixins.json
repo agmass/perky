@@ -1,14 +1,16 @@
 {
-	"required": true,
-	"package": "org.agmas.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-      "BrutallyRipOutThePlayersArmsMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "org.agmas.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PerkModifyDamageMixin",
+    "PerkModifyTridentRiptideMixin",
+    "PerkyTickMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }

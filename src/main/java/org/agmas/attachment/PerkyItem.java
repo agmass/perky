@@ -2,8 +2,12 @@ package org.agmas.attachment;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.player.Player;
+import org.agmas.accessors.PlayerAccessor;
 import org.agmas.init.ModRegistries;
 import org.agmas.porting.PPIdentifier;
 
@@ -24,6 +28,8 @@ public class PerkyItem {
         attributes = permanentAttributes;
     }
 
+    public CancellableResult canRiptide(Player player) { return CancellableResult.PASS;}
+
     public boolean shouldRenderPart(String partName) {
         return true;
     }
@@ -36,6 +42,34 @@ public class PerkyItem {
         return item == null ? null : new PPIdentifier(ModRegistries.PERKY_ITEM.getKey(item));
     }
 
+    public void tick(LivingEntity livingEntity) {
+        if (attributes != null) {
+            for (PerkyItem.AttributePair attribute : attributes) {
+                //? if >=1.21.1 {
+                /*Holder<Attribute> attr = attribute.holder;
+                *///? } else {
+                Attribute attr = attribute.holder.value();
+                //? }
+
+                //? if >=1.21.1 {
+                /*if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier.id())) {
+                *///? } else {
+                if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
+                //? }
+                    livingEntity.getAttribute(attr).addPermanentModifier(attribute.modifier);
+                }
+            }
+        }
+    }
+
+    public float modifyDamage(LivingEntity victim, DamageSource source, float v) {
+        return -1;
+    }
+
+    public void onDamage(LivingEntity victim, DamageSource source, float v) {
+        ((PlayerAccessor)victim).perky$setTimeSinceLastDamage(0);
+    }
+
     public static class AttributePair {
         public Holder<Attribute> holder;
         public AttributeModifier modifier;
@@ -44,5 +78,11 @@ public class PerkyItem {
             this.holder = holder;
             this.modifier = modifier;
         }
+    }
+
+    public enum CancellableResult {
+        CANCEL,
+        PASS,
+        SUCCESS
     }
 }

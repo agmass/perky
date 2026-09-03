@@ -1,0 +1,19 @@
+{
+  "perky.binding": "binding",
+  "perky.commands.add.already_has_item": "%2$s already has %1$s %3$s",
+  "perky.commands.add.success": "Gave %1$s %3$s to %2$s",
+  "perky.commands.list": "%s's perk(s) and binding(s): %s",
+  "perky.commands.remove.does_not_have_item": "%2$s does not have %1$s %3$s",
+  "perky.commands.remove.success": "Removed %1$s %3$s from %2$s",
+  "perky.perk": "perk",
+  "perky.perk.perky.fishermans_charm": "Fisherman's Charm",
+  "perky.perk.perky.fishermans_charm.desc": "Increases Luck",
+  "perky.perk.perky.flammable": "Flammable",
+  "perky.perk.perky.flammable.desc": "Increase time set on fire by 100%",
+  "perky.perk.perky.passive_absorption": "Passive Absorption",
+  "perky.perk.perky.passive_absorption.desc": "When out of combat for 30+ seconds, gain 4 hearts of Absorption",
+  "perky.perk.perky.singlehanded": "Singlehanded",
+  "perky.perk.perky.singlehanded.desc": "Removes your off-hand, rendering it unusable.",
+  "perky.perk.perky.smooth_landing": "Smooth Landing",
+  "perky.perk.perky.smooth_landing.desc": "Increase safe fall distance by 2 blocks"
+}

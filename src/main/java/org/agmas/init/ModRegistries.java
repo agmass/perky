@@ -12,9 +12,9 @@ public class ModRegistries {
             //? if <26.1 {
             FabricRegistryBuilder.createSimple(PERKY_ITEM_KEY)
             //? } else {
-            /*
-            FabricRegistryBuilder.create(PERKY_ITEM_KEY)*/
-            //? }
+            
+            /*FabricRegistryBuilder.create(PERKY_ITEM_KEY)
+            *///? }
             .buildAndRegister();
 
     public static void init() {

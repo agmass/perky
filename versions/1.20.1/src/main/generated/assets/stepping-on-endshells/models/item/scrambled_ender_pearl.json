@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "stepping-on-endshells:item/scrambled_ender_pearl"
-  }
-}
