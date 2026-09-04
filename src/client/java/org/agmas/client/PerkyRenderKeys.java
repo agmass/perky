@@ -1,7 +1,7 @@
 package org.agmas.client;
 
 //? if >=1.21.11 {
-/*import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
+import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 
 public class PerkyRenderKeys {
     public static RenderStateDataKey<Boolean> shouldRenderHead = RenderStateDataKey.create();
@@ -12,4 +12,4 @@ public class PerkyRenderKeys {
     public static RenderStateDataKey<Boolean> shouldRenderRightLeg = RenderStateDataKey.create();
 }
 
-*///? }
+//? }

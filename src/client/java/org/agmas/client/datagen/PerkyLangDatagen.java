@@ -22,21 +22,21 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         super(dataOutput, registryLookup);
     }
      *///? } else if >=1.21.1 {
-    /*public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
-    *///? } else {
-    public PerkyLangDatagen(FabricDataOutput dataOutput) {
+    //? } else {
+    /*public PerkyLangDatagen(FabricDataOutput dataOutput) {
         super(dataOutput);
     }
-    //? }
+    *///? }
 
     //? if >=1.21.1 {
-    /*@Override
+    @Override
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder translationBuilder) {
-    *///? } else {
-    public void generateTranslations(TranslationBuilder translationBuilder) {
-    //? }
+    //? } else {
+    /*public void generateTranslations(TranslationBuilder translationBuilder) {
+    *///? }
 
         translationBuilder.add(PerkyCommands.PERK, "perk");
         translationBuilder.add(PerkyCommands.BINDING, "binding");

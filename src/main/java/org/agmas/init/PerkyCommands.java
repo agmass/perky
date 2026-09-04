@@ -5,8 +5,8 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 //? if >=1.21.11 {
-/*import net.minecraft.server.permissions.Permissions;
-*///?}
+import net.minecraft.server.permissions.Permissions;
+//?}
 import net.minecraft.world.entity.player.Player;
 import org.agmas.Perky;
 import org.agmas.attachment.PerkyItem;
@@ -31,10 +31,10 @@ public class PerkyCommands {
             l.register(
                     Commands.literal("perky")
                             //? if >=1.21.11 {
-                            /*.requires(p->p.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
-                            *///? } else {
-                            .requires(p->p.hasPermission(2))
-                             //? }
+                            .requires(p->p.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
+                            //? } else {
+                            /*.requires(p->p.hasPermission(2))
+                             *///? }
                             .then(Commands.literal("add")
                                     .then(Commands.argument("player", EntityArgument.player())
                                             .then(Commands.argument("perkOrBinding", PerkyItemArgument.perkyItem())

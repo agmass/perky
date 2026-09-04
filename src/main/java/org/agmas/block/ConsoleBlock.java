@@ -1,44 +1,33 @@
 package org.agmas.block;
 
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.loader.impl.util.log.Log;
-import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 //? if >1.21.1
-//import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
-import org.agmas.attachment.PerkyPlayerAttachment;
+import org.agmas.attachment.BloodstreamAttachment;
 import org.agmas.block.entity.ConsoleBlockEntity;
 import org.agmas.init.ModAttachments;
 import org.agmas.network.OpenPerkyMenuPayload;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Function;
 
 public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
@@ -50,13 +39,13 @@ public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBl
     }
 
     //? if >1.20.1 {
-    /*public static final MapCodec<ConsoleBlock> CODEC = simpleCodec(ConsoleBlock::new);
+    public static final MapCodec<ConsoleBlock> CODEC = simpleCodec(ConsoleBlock::new);
 
     @Override
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return CODEC;
     }
-    *///?}
+    //?}
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -94,15 +83,15 @@ public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBl
 
     //? if <1.21.1 {
 
-    @Override
+    /*@Override
     public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-    //? } else if =1.21.1 {
+    *///? } else if =1.21.1 {
     /*@Override
     protected BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
     *///? } else {
-    /*@Override
+    @Override
     protected BlockState updateShape(BlockState blockState, LevelReader levelReader, ScheduledTickAccess scheduledTickAccess, BlockPos blockPos, Direction direction, BlockPos blockPos2, BlockState blockState2, RandomSource randomSource) {
-    *///? }
+    //? }
 
         Direction adjacent = blockState.getValue(FACING);
         Direction adjacentVertical;
@@ -124,20 +113,20 @@ public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBl
         }
 
         //? if >1.21.1 {
-        /*return super.updateShape(blockState, levelReader, scheduledTickAccess, blockPos, direction, blockPos2, blockState2, randomSource);
-        *///? } else {
-        return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
-         //? }
+        return super.updateShape(blockState, levelReader, scheduledTickAccess, blockPos, direction, blockPos2, blockState2, randomSource);
+        //? } else {
+        /*return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+         *///? }
     }
 
     //? if >=1.21.1 {
-    /*protected InteractionResult useWithoutItem(final BlockState state, final Level level, final BlockPos pos, final Player player, final BlockHitResult hitResult) {
-    *///? } else {
-    @Override
+    protected InteractionResult useWithoutItem(final BlockState state, final Level level, final BlockPos pos, final Player player, final BlockHitResult hitResult) {
+    //? } else {
+    /*@Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-    //? }
+    *///? }
         if (!level.isClientSide()) {
-            player.getAttachedOrElse(ModAttachments.PERKY_ATTACHMENT, new PerkyPlayerAttachment()).usingConsole = true;
+            player.getAttachedOrElse(ModAttachments.PERKY_ATTACHMENT, new BloodstreamAttachment()).usingConsole = true;
             ServerPlayNetworking.send(((ServerPlayer) player), new OpenPerkyMenuPayload());
         }
         return InteractionResult.SUCCESS;

@@ -4,7 +4,7 @@ package org.agmas.client.mixin.newRenderingEngineMixins;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 //? if >=1.21.4 {
-/*import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.HumanoidArm;
@@ -56,8 +56,8 @@ public class AvatarModelMixin {
 		head.visible = head.visible && humanoidRenderState.getDataOrDefault(PerkyRenderKeys.shouldRenderHead, true);
 	}
 }
-*///? } else {
+//? } else {
 
-@Mixin(Minecraft.class)
+/*@Mixin(Minecraft.class)
 public class AvatarModelMixin {}
-//? }
+*///? }

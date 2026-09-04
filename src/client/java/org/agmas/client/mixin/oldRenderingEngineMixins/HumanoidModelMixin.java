@@ -7,7 +7,7 @@ import net.minecraft.client.model.geom.ModelPart;import net.minecraft.world.enti
 //? if <=1.21.1 {
 
 
-import net.minecraft.client.model.HumanoidModel;
+/*import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 @Mixin(HumanoidModel.class)
 public class HumanoidModelMixin {
@@ -37,7 +37,7 @@ public class HumanoidModelMixin {
         }
     }
 }
-//? } else {
-/*@Mixin(Minecraft.class)
+*///? } else {
+@Mixin(Minecraft.class)
 public class HumanoidModelMixin {}
-*///? }
+//? }

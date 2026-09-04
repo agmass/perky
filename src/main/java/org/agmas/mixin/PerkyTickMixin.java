@@ -1,20 +1,12 @@
 package org.agmas.mixin;
 
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import org.agmas.Perky;
 import org.agmas.accessors.PlayerAccessor;
 import org.agmas.attachment.PerkyItem;
-import org.agmas.attachment.PerkyPlayerAttachment;
-import org.agmas.init.ModAttachments;
 
 //? if <1.21.1
-import org.agmas.network.OldVersionPerkyNetworkingPayload;
+//import org.agmas.network.OldVersionPerkyNetworkingPayload;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -63,7 +55,7 @@ public class PerkyTickMixin implements PlayerAccessor {
 		}
 
 		//? if <=1.20.4 {
-		if (p.hasAttached(ModAttachments.PERKY_ATTACHMENT) && !p.level().isClientSide()) {
+		/*if (p.hasAttached(ModAttachments.PERKY_ATTACHMENT) && !p.level().isClientSide()) {
 			PerkyPlayerAttachment playerAttachment = p.getAttached(ModAttachments.PERKY_ATTACHMENT);
 			for (Player player : p.level().players()) {
 				if (!playerAttachment.networkedTo.contains(player.getUUID())) {
@@ -74,7 +66,7 @@ public class PerkyTickMixin implements PlayerAccessor {
 				}
 			}
 		}
-		//? }
+		*///? }
 	}
 
 	@Override

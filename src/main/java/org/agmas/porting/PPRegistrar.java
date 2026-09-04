@@ -25,15 +25,15 @@ public class PPRegistrar {
 
         Block block = blockFactory.apply(properties
                 //? if >=1.21.4 {
-                /*.setId(keyOfBlock(name))
-                 *///? }
+                .setId(keyOfBlock(name))
+                 //? }
         );
 
         if (shouldRegisterItem) {
             registerItem(name, (b)->{return new BlockItem(block, b);}, new Item.Properties()
                     //? if >=1.21.4 {
-                    /*.setId(keyOfItem(name)).useBlockDescriptionPrefix()
-                     *///? }
+                    .setId(keyOfItem(name)).useBlockDescriptionPrefix()
+                     //? }
             , tab);
         }
 
@@ -50,8 +50,8 @@ public class PPRegistrar {
 
         T item = itemFactory.apply(settings
                 //? if >=1.21.4 {
-                /*.setId(itemKey)
-                 *///? }
+                .setId(itemKey)
+                 //? }
         );
 
         Registry.register(BuiltInRegistries.ITEM, itemKey, item);
@@ -70,13 +70,13 @@ public class PPRegistrar {
 
 
     //? if >=1.21.4 {
-    /*private static ResourceKey<Block> keyOfBlock(String name) {
+    private static ResourceKey<Block> keyOfBlock(String name) {
         return ResourceKey.create(Registries.BLOCK, PPIdentifier.of(name).id);
     }
 
     private static ResourceKey<Item> keyOfItem(String name) {
         return ResourceKey.create(Registries.ITEM, PPIdentifier.of(name).id);
     }
-    *///? }
+    //? }
 
 }

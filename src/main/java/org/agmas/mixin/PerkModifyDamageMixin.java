@@ -6,23 +6,20 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import org.agmas.Perky;
-import org.agmas.accessors.PlayerAccessor;
 import org.agmas.attachment.PerkyItem;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public class PerkModifyDamageMixin {
 
-	@WrapMethod(method = "actuallyHurt")
 	//? if <1.21.4 {
-	public void modifyHurt(DamageSource damageSource, float f, Operation<Void> original) {
-	//? } else {
-	/*public void modifyHurt(ServerLevel serverLevel, DamageSource damageSource, float f, Operation<Void> original) {
-	*///? }
+	/*@WrapMethod(method = "hurt")
+	public boolean modifyHurt(DamageSource damageSource, float f, Operation<Boolean> original) {
+	*///? } else {
+	
+	@WrapMethod(method = "hurtServer")
+	public boolean modifyHurt(ServerLevel serverLevel, DamageSource damageSource, float f, Operation<Boolean> original) {
+	//? }
 		float damage = f;
 		for (PerkyItem attachment : Perky.getAttachments(((LivingEntity) (Object) this))) {
 			float modifiedDamage = attachment.modifyDamage(((LivingEntity) (Object)this),damageSource,damage);
@@ -31,8 +28,9 @@ public class PerkModifyDamageMixin {
 			}
 		}
 		//? if <1.21.4
-		original.call(damageSource,damage);
+		//return original.call(damageSource,damage);
 		//? if >1.21.4
-		//original.call(serverLevel, damageSource,damage);
+		return original.call(serverLevel, damageSource,damage);
+
 	}
 }

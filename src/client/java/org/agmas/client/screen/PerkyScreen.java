@@ -1,8 +1,6 @@
 package org.agmas.client.screen;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.loader.impl.util.log.Log;
-import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 //? if <=1.21.11
@@ -10,32 +8,25 @@ import net.minecraft.client.gui.GuiGraphics;
 //? if >=26.1
 //import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
-import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 //? if >1.21.1
-//import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import org.agmas.attachment.BloodstreamAttachment;
 import org.agmas.attachment.PerkyItem;
-import org.agmas.attachment.PerkyPlayerAttachment;
 import org.agmas.init.ModRegistries;
 import org.agmas.network.ChangePerksPayload;
 import org.agmas.porting.PPIdentifier;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class PerkyScreen extends Screen {
 
     private static final PPIdentifier CONTAINER_TEXTURE = PPIdentifier.of("textures/gui/container/console.png");
 
-    public PerkyPlayerAttachment selectedItems = new PerkyPlayerAttachment();
+    public BloodstreamAttachment selectedItems = new BloodstreamAttachment();
     public PerkyItem hovered = null;
     public PerkyScreen(Component component) {
         super(component);
@@ -161,34 +152,34 @@ public class PerkyScreen extends Screen {
     //public static void simpleBlit(PPIdentifier identifier, GuiGraphicsExtractor graphics, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
 
         //? if >1.21.1 {
-        /*graphics.blit(identifier.id,
+        graphics.blit(identifier.id,
                 x,y,
                 endX,endY,
                 0,1,0,1);
-        *///? } else {
+        //? } else {
 
-        graphics.blit(identifier.id,
+        /*graphics.blit(identifier.id,
                 x,y,0,
                 0,0,
                 endX-x, endY-y,
                 textureWidth,textureHeight
         );
-        //? }
+        *///? }
     }
 
     //? if >1.21.1 {
-    /*@Override
+    @Override
     public boolean mouseClicked(MouseButtonEvent mouseButtonEvent, boolean bl) {
         onClick();
         return super.mouseClicked(mouseButtonEvent, bl);
     }
-    *///? } else {
-    @Override
+    //? } else {
+    /*@Override
     public boolean mouseClicked(double d, double e, int i) {
         onClick();
         return super.mouseClicked(d, e, i);
     }
-    //? }
+    *///? }
 
     public void onClick() {
         if (!selectedItems.appliedItems.contains(hovered))
@@ -204,9 +195,9 @@ public class PerkyScreen extends Screen {
     //? }
         graphics.fill(perkX,perkY,perkEndX,perkEndY, new Color(255,255,255,75).getRGB());
         //? if >1.21.1
-        //graphics.setTooltipForNextFrame(
+        graphics.setTooltipForNextFrame(
         //? if <=1.21.1
-        graphics.renderTooltip(
+        //graphics.renderTooltip(
                 Minecraft.getInstance().font, List.of(
                 Component.translatable("perky." + (item.worth > 0 ? "perk" : "binding") + "." + id.id.getNamespace() + "." + id.id.getPath()).withStyle(ChatFormatting.GREEN).getVisualOrderText(),
                 Component.translatable("perky." + (item.worth > 0 ? "perk" : "binding") + "." + id.id.getNamespace() + "." + id.id.getPath() + ".desc").getVisualOrderText()
