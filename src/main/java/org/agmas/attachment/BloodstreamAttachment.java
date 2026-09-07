@@ -33,7 +33,6 @@ public class BloodstreamAttachment
             Codec.STRING.listOf().fieldOf("applied_items").forGetter(BloodstreamAttachment::getAppliedItemsStrings)
     ).apply(instance, BloodstreamAttachment::new));
 
-
     public boolean usingConsole = false;
     public BloodstreamAttachment(List<String> perkyItemStrings) {
         for (String perkyItemString : perkyItemStrings) {
@@ -48,6 +47,8 @@ public class BloodstreamAttachment
 
     public ArrayList<PerkyItem> appliedItems = new ArrayList<>();
 
+    public ArrayList<UUID> networkedTo = new ArrayList<>();
+    // This is like, Really Jank, LOL
     //? if >=1.21.1 {
     public static StreamCodec<ByteBuf, BloodstreamAttachment> STREAM_CODEC = new StreamCodec<ByteBuf, BloodstreamAttachment>() {
         public BloodstreamAttachment decode(ByteBuf byteBuf) {

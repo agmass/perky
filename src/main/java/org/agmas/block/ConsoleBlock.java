@@ -94,11 +94,11 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
         if (!level.isClientSide()) {
-            level.setBlock(blockPos.above(), (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER_LEFT), 3);
+            level.setBlock(blockPos.above(), (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER_LEFT).setValue(FACING, blockState.getValue(FACING)), 3);
             BlockPos blockPos2 = blockPos.relative((Direction) blockState.getValue(FACING).getClockWise());
-            level.setBlock(blockPos2, (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.LOWER_RIGHT), 3);
+            level.setBlock(blockPos2, (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.LOWER_RIGHT).setValue(FACING, blockState.getValue(FACING)), 3);
             BlockPos blockPos3 = blockPos2.above();
-            level.setBlock(blockPos3, (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER_RIGHT), 3);
+            level.setBlock(blockPos3, (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER_RIGHT).setValue(FACING, blockState.getValue(FACING)), 3);
             level.updateNeighborsAt(blockPos, Blocks.AIR);
             blockState.updateNeighbourShapes(level, blockPos, 3);
         }
@@ -150,7 +150,7 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
     *///? }
         if (!level.isClientSide()) {
             player.getAttachedOrElse(ModAttachments.PERKY_ATTACHMENT, new BloodstreamAttachment()).usingConsole = true;
-            ServerPlayNetworking.send(((ServerPlayer) player), new OpenPerkyMenuPayload());
+            ServerPlayNetworking.send(((ServerPlayer) player), new OpenPerkyMenuPayload(((ConsoleBlockEntity) level.getBlockEntity(findParent(pos,state,level))).attachedBlood));
         }
         return InteractionResult.SUCCESS;
     }

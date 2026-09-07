@@ -55,6 +55,7 @@ public class ConsoleBlockEntityRenderer implements BlockEntityRenderer<ConsoleBl
 
     public ConsoleBlockEntityRenderState getRenderState(ConsoleBlockEntity blockEntity, ConsoleBlockEntityRenderState consoleBlockEntityRenderState) {
         consoleBlockEntityRenderState.shouldShowFillant = true;
+        consoleBlockEntityRenderState.direction = blockEntity.direction;
         return consoleBlockEntityRenderState;
     }
 
@@ -63,10 +64,22 @@ public class ConsoleBlockEntityRenderer implements BlockEntityRenderer<ConsoleBl
     public void submit(ConsoleBlockEntityRenderState blockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         model.resetPose();
         model.setupAnim(blockEntityRenderState);
-        Direction facing = blockEntityRenderState.blockState.getValue(HorizontalDirectionalBlock.FACING);
+        Direction facing = blockEntityRenderState.blockState.getValue(HorizontalDirectionalBlock.FACING).getOpposite();
         poseStack.mulPose(
-                Axis.YP.rotationDegrees(facing.toYRot())
+                Axis.YN.rotationDegrees(facing.toYRot())
         );
+        if (facing.equals(Direction.SOUTH)) {
+            poseStack.translate(1,0,0.5);
+        }
+        if (facing.equals(Direction.WEST)) {
+            poseStack.translate(1,0,-0.5);
+        }
+        if (facing.equals(Direction.EAST)) {
+            poseStack.translate(0,0,0.5);
+        }
+        if (facing.equals(Direction.NORTH)) {
+            poseStack.translate(0,0,-0.5);
+        }
         submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack, RenderTypes.entityTranslucent(ConsoleModel.textureLocation.id), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,0, null);
     }
     //? } else {

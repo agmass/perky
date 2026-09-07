@@ -14,7 +14,7 @@ public class ModBlocks {
             "console_child",
             ConsoleBlock::new,
             BlockBehaviour.Properties.of()
-                    .sound(SoundType.LODESTONE).destroyTime(2f).lightLevel((l)->3),
+                    .sound(SoundType.LODESTONE).destroyTime(2f).lightLevel((l)->3).noOcclusion(),
             false,
             CreativeModeTabs.FUNCTIONAL_BLOCKS
     );
@@ -23,7 +23,7 @@ public class ModBlocks {
             "console",
             ConsoleParentBlock::new,
             BlockBehaviour.Properties.of()
-                    .sound(SoundType.LODESTONE).destroyTime(2f).lightLevel((l)->3),
+                    .sound(SoundType.LODESTONE).destroyTime(2f).lightLevel((l)->3).noOcclusion(),
             true,
             CreativeModeTabs.FUNCTIONAL_BLOCKS
     );
