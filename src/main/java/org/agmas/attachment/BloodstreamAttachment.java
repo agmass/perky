@@ -47,8 +47,6 @@ public class BloodstreamAttachment
     public BloodstreamAttachment() {}
 
     public ArrayList<PerkyItem> appliedItems = new ArrayList<>();
-    public ArrayList<UUID> networkedTo = new ArrayList<>();
-    // This is like, Really Jank, LOL
 
     //? if >=1.21.1 {
     public static StreamCodec<ByteBuf, BloodstreamAttachment> STREAM_CODEC = new StreamCodec<ByteBuf, BloodstreamAttachment>() {

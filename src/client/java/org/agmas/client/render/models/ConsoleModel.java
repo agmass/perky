@@ -93,12 +93,7 @@ public class ConsoleModel extends Model
 	public void setupAnim(ConsoleBlockEntityRenderState console) {
 		//? if >=1.21.4
 		super.setupAnim(console);
-		fillant.visible = false;
-		allParts().forEach((mp)->{
-			if (mp.visible) {
-				mp.visible = console.shouldShow;
-			}
-		});
+		fillant.visible = console.shouldShowFillant;
 	}
 
 	//? if <1.21.4 {

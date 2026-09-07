@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 //? if >1.21.1
 import net.minecraft.world.level.ScheduledTickAccess;
@@ -26,16 +27,17 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.agmas.attachment.BloodstreamAttachment;
 import org.agmas.block.entity.ConsoleBlockEntity;
 import org.agmas.init.ModAttachments;
+import org.agmas.init.ModBlocks;
 import org.agmas.network.OpenPerkyMenuPayload;
 import org.jetbrains.annotations.Nullable;
 
-public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class ConsoleBlock extends HorizontalDirectionalBlock {
 
     public static final EnumProperty<ConsoleBlockPart> PART = EnumProperty.create("console_part", ConsoleBlockPart.class);
 
     public ConsoleBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(PART, ConsoleBlockPart.LOWER_RIGHT).setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(PART, ConsoleBlockPart.LOWER_LEFT).setValue(FACING, Direction.NORTH));
     }
 
     //? if >1.20.1 {
@@ -50,6 +52,27 @@ public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBl
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(new Property[]{FACING, PART});
+    }
+
+    public BlockPos findParent(BlockPos pos, BlockState state, LevelAccessor level) {
+        if (state.getBlock() instanceof ConsoleParentBlock) {
+            return pos;
+        }
+        switch (state.getValue(PART)) {
+            case LOWER_LEFT -> {
+                return pos;
+            }
+            case UPPER_LEFT -> {
+                return pos.below(1);
+            }
+            case LOWER_RIGHT -> {
+                return pos.relative(state.getValue(FACING).getCounterClockWise());
+            }
+            case UPPER_RIGHT -> {
+                return pos.relative(state.getValue(FACING).getCounterClockWise()).below(1);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -71,11 +94,11 @@ public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBl
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
         if (!level.isClientSide()) {
-            level.setBlock(blockPos.above(), (BlockState) blockState.setValue(PART, ConsoleBlockPart.UPPER_LEFT), 3);
+            level.setBlock(blockPos.above(), (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER_LEFT), 3);
             BlockPos blockPos2 = blockPos.relative((Direction) blockState.getValue(FACING).getClockWise());
-            level.setBlock(blockPos2, (BlockState) blockState.setValue(PART, ConsoleBlockPart.LOWER_RIGHT), 3);
+            level.setBlock(blockPos2, (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.LOWER_RIGHT), 3);
             BlockPos blockPos3 = blockPos2.above();
-            level.setBlock(blockPos3, (BlockState) blockState.setValue(PART, ConsoleBlockPart.UPPER_RIGHT), 3);
+            level.setBlock(blockPos3, (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER_RIGHT), 3);
             level.updateNeighborsAt(blockPos, Blocks.AIR);
             blockState.updateNeighbourShapes(level, blockPos, 3);
         }
@@ -108,7 +131,7 @@ public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBl
         }
 
         if (direction == adjacentVertical || direction == adjacent) {
-            if (!blockState2.is(this))
+            if (!blockState2.is(ModBlocks.CONSOLE) && !blockState2.is(ModBlocks.CONSOLE_CHILD))
                 return Blocks.AIR.defaultBlockState();
         }
 
@@ -131,12 +154,6 @@ public class ConsoleBlock extends HorizontalDirectionalBlock implements EntityBl
         }
         return InteractionResult.SUCCESS;
     }
-
-    @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new ConsoleBlockEntity(blockPos, blockState);
-    }
-
 
     public enum ConsoleBlockPart implements StringRepresentable {
         UPPER_LEFT("upper_left"),

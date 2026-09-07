@@ -7,5 +7,5 @@ public class ConsoleBlockEntityRenderState
     //? if >=1.21.11
     extends BlockEntityRenderState
 {
-    public boolean shouldShow = false;
+    public boolean shouldShowFillant = false;
 }
