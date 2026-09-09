@@ -1,19 +1,20 @@
 package org.agmas.network;
 
 //? if <1.21.1 {
-/*import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.fabricmc.fabric.api.networking.v1.FabricPacket;
 import net.fabricmc.fabric.api.networking.v1.PacketType;
-*///? } else {
-import net.minecraft.network.RegistryFriendlyByteBuf;
+//? } else {
+/*import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-//? }
+*///? }
         import org.agmas.attachment.BloodstreamAttachment;
         import org.agmas.porting.PPIdentifier;
 
 //? if >=1.21.1 {
-public record ChangePerksPayload(BloodstreamAttachment chosenPerks) implements CustomPacketPayload
+/*public record ChangePerksPayload(BloodstreamAttachment chosenPerks) implements CustomPacketPayload
 {
     public static final PPIdentifier CHANGE_PERKS_ID = PPIdentifier.of("change_perks");
     public static final CustomPacketPayload.Type<ChangePerksPayload> ID = new CustomPacketPayload.Type<>(CHANGE_PERKS_ID.id);
@@ -40,8 +41,8 @@ public record ChangePerksPayload(BloodstreamAttachment chosenPerks) implements C
         return ID;
     }
 }
-//? } else {
-/*public record ChangePerksPayload(PerkyPlayerAttachment chosenPerks) implements FabricPacket
+*///? } else {
+public record ChangePerksPayload(BloodstreamAttachment chosenPerks) implements FabricPacket
 {
     public static final PPIdentifier CHANGE_PERKS_ID = PPIdentifier.of("change_perks");
 
@@ -52,7 +53,7 @@ public record ChangePerksPayload(BloodstreamAttachment chosenPerks) implements C
     }
 
     public static ChangePerksPayload read(FriendlyByteBuf friendlyByteBuf) {
-        return new ChangePerksPayload(PerkyPlayerAttachment.decode(friendlyByteBuf));
+        return new ChangePerksPayload(BloodstreamAttachment.decode(friendlyByteBuf));
     }
 
     @Override
@@ -60,4 +61,4 @@ public record ChangePerksPayload(BloodstreamAttachment chosenPerks) implements C
         return PACKET_TYPE;
     }
 }
-*///? }
+//? }

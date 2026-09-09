@@ -13,7 +13,16 @@ import org.spongepowered.asm.mixin.injection.At;
 public class PerkModifyTridentRiptideMixin {
 
 	@WrapOperation(method = "releaseUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isInWaterOrRain()Z"))
-	public boolean modifyHurt(Player instance, Operation<Boolean> original) {
+	public boolean modifyCanRiptide(Player instance, Operation<Boolean> original) {
+		for (PerkyItem attachment : Perky.getAttachments(instance)) {
+			if (attachment.canRiptide(instance).equals(PerkyItem.CancellableResult.SUCCESS)) return true;
+			if (attachment.canRiptide(instance).equals(PerkyItem.CancellableResult.CANCEL)) return false;
+		}
+		return original.call(instance);
+	}
+
+	@WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isInWaterOrRain()Z"))
+	public boolean allowUse(Player instance, Operation<Boolean> original) {
 		for (PerkyItem attachment : Perky.getAttachments(instance)) {
 			if (attachment.canRiptide(instance).equals(PerkyItem.CancellableResult.SUCCESS)) return true;
 			if (attachment.canRiptide(instance).equals(PerkyItem.CancellableResult.CANCEL)) return false;

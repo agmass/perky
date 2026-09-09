@@ -7,6 +7,7 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.InventoryMenu;
 import org.agmas.accessors.PlayerAccessor;
 import org.agmas.init.ModRegistries;
 import org.agmas.porting.PPIdentifier;
@@ -41,21 +42,23 @@ public class PerkyItem {
     public static PPIdentifier getKey(PerkyItem item) {
         return item == null ? null : new PPIdentifier(ModRegistries.PERKY_ITEM.getKey(item));
     }
+    
+    public void onRemoved(LivingEntity livingEntity) {}
 
     public void tick(LivingEntity livingEntity) {
         if (attributes != null) {
             for (PerkyItem.AttributePair attribute : attributes) {
                 //? if >=1.21.1 {
-                Holder<Attribute> attr = attribute.holder;
-                //? } else {
-                /*Attribute attr = attribute.holder.value();
-                *///? }
+                /*Holder<Attribute> attr = attribute.holder;
+                *///? } else {
+                Attribute attr = attribute.holder.value();
+                //? }
 
                 //? if >=1.21.1 {
-                if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier.id())) {
-                //? } else {
-                /*if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
-                *///? }
+                /*if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier.id())) {
+                *///? } else {
+                if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
+                //? }
                     livingEntity.getAttribute(attr).addPermanentModifier(attribute.modifier);
                 }
             }

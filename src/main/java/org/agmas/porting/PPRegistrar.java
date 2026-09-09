@@ -21,19 +21,24 @@ import java.util.function.Function;
 
 public class PPRegistrar {
 
-    public static Block registerBlock(String name, Function<BlockBehaviour.Properties, Block> blockFactory, BlockBehaviour.Properties properties, boolean shouldRegisterItem, ResourceKey<CreativeModeTab> tab) {
+    public static Block registerBlock(String name, Function<BlockBehaviour.Properties, Block> blockFactory, BlockBehaviour.Properties properties, boolean shouldRegisterItem,
+                                      //? if >1.19
+                                      //ResourceKey<CreativeModeTab> tab
+                                      //? if <=1.19
+                                      CreativeModeTab tab
+    ) {
 
         Block block = blockFactory.apply(properties
                 //? if >=1.21.4 {
-                .setId(keyOfBlock(name))
-                 //? }
+                /*.setId(keyOfBlock(name))
+                 *///? }
         );
 
         if (shouldRegisterItem) {
             registerItem(name, (b)->{return new BlockItem(block, b);}, new Item.Properties()
                     //? if >=1.21.4 {
-                    .setId(keyOfItem(name)).useBlockDescriptionPrefix()
-                     //? }
+                    /*.setId(keyOfItem(name)).useBlockDescriptionPrefix()
+                     *///? }
             , tab);
         }
 
@@ -45,13 +50,18 @@ public class PPRegistrar {
         return ResourceKey.createRegistryKey(PPIdentifier.of(string).id);
     }
 
-    public static <T extends Item> T registerItem(String name, Function<Item.Properties, T> itemFactory, Item.Properties settings, ResourceKey<CreativeModeTab> tab) {
+    public static <T extends Item> T registerItem(String name, Function<Item.Properties, T> itemFactory, Item.Properties settings,
+                                                  //? if >1.19
+                                                  //ResourceKey<CreativeModeTab> tab
+                                                  //? if <=1.19
+                                                  CreativeModeTab tab
+                                                  ) {
         ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, PPIdentifier.of(name).id);
 
         T item = itemFactory.apply(settings
                 //? if >=1.21.4 {
-                .setId(itemKey)
-                 //? }
+                /*.setId(itemKey)
+                 *///? }
         );
 
         Registry.register(BuiltInRegistries.ITEM, itemKey, item);
@@ -60,7 +70,7 @@ public class PPRegistrar {
         /*CreativeModeTabEvents.modifyOutputEvent(tab)
         *///? } else {
         ItemGroupEvents.modifyEntriesEvent(tab)
-         //? }
+        //? }
         .register((creativeTab) -> {
             creativeTab.accept(item);
         });
@@ -70,13 +80,13 @@ public class PPRegistrar {
 
 
     //? if >=1.21.4 {
-    private static ResourceKey<Block> keyOfBlock(String name) {
+    /*private static ResourceKey<Block> keyOfBlock(String name) {
         return ResourceKey.create(Registries.BLOCK, PPIdentifier.of(name).id);
     }
 
     private static ResourceKey<Item> keyOfItem(String name) {
         return ResourceKey.create(Registries.ITEM, PPIdentifier.of(name).id);
     }
-    //? }
+    *///? }
 
 }

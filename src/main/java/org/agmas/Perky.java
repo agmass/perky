@@ -2,11 +2,13 @@ package org.agmas;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.impl.attachment.AttachmentTargetImpl;
+//? if >1.19
+//import net.fabricmc.fabric.impl.attachment.AttachmentTargetImpl;
 //? if >1.21.1
-import net.fabricmc.fabric.impl.attachment.sync.AttachmentChange;
+//import net.fabricmc.fabric.impl.attachment.sync.AttachmentChange;
+//? if >1.21.1
+//import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.minecraft.core.Holder;
 //? if >=1.21.11 {
 //? } else if >1.21.1 {
@@ -22,8 +24,9 @@ import org.agmas.network.ChangePerksPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 //? if >=1.21.1
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+//import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Perky implements ModInitializer {
@@ -48,41 +51,70 @@ public class Perky implements ModInitializer {
 		//? if >=26.1 {
 		/*PayloadTypeRegistry.clientboundPlay()
 		 *///? } else if >=1.21.1 {
-		PayloadTypeRegistry.playS2C()
-				//? }
+		/*PayloadTypeRegistry.playS2C()
+				*///? }
 				//? if >1.20.4
-				.register(OpenPerkyMenuPayload.ID, OpenPerkyMenuPayload.CODEC);
+				//.register(OpenPerkyMenuPayload.ID, OpenPerkyMenuPayload.CODEC);
 
 
 		//? if >=26.1 {
 		/*PayloadTypeRegistry.serverboundPlay()
 		 *///? } else if >=1.21.1 {
-		PayloadTypeRegistry.playC2S()
-				//? }
+		/*PayloadTypeRegistry.playC2S()
+				*///? }
 				//? if >1.20.4
-				.register(ChangePerksPayload.ID, ChangePerksPayload.CODEC);
+				//.register(ChangePerksPayload.ID, ChangePerksPayload.CODEC);
 
 		//? if >=1.21.1 {
-		ServerPlayNetworking.registerGlobalReceiver(ChangePerksPayload.ID, ((payload, context) -> {
-			context.player().setAttached(ModAttachments.PERKY_ATTACHMENT, payload.chosenPerks());
+		/*ServerPlayNetworking.registerGlobalReceiver(ChangePerksPayload.ID, ((payload, context) -> {
+			BloodstreamAttachment bloodstreamAttachment = context.player().getAttachedOrElse(ModAttachments.PERKY_ATTACHMENT, new BloodstreamAttachment());
+			ArrayList<PerkyItem> toRemove = new ArrayList<>();
+			for (PerkyItem appliedItem : bloodstreamAttachment.appliedItems) {
+				if (!payload.chosenPerks().appliedItems.contains(appliedItem)) {
+					toRemove.add(appliedItem);
+				}
+			}
+			for (PerkyItem perkyItem : toRemove) {
+				removeAttachment(context.player(), perkyItem);
+			}
+			for (PerkyItem appliedItem : payload.chosenPerks().appliedItems) {
+				if (!bloodstreamAttachment.appliedItems.contains(appliedItem)) {
+					addAttachment(context.player(), appliedItem);
+				}
+			}
 		}));
-		//? } else {
-		/*ServerPlayNetworking.registerGlobalReceiver(ChangePerksPayload.PACKET_TYPE, ((payload, localPlayer, packetSender) -> {
-			localPlayer.setAttached(ModAttachments.PERKY_ATTACHMENT, payload.chosenPerks());
+		*///? } else {
+		ServerPlayNetworking.registerGlobalReceiver(ChangePerksPayload.PACKET_TYPE, ((payload, localPlayer, packetSender) -> {
+			BloodstreamAttachment bloodstreamAttachment = ModAttachments.PERKY_ATTACHMENT.getOrElse(localPlayer, new BloodstreamAttachment());
+
+			ArrayList<PerkyItem> toRemove = new ArrayList<>();
+			for (PerkyItem appliedItem : bloodstreamAttachment.appliedItems) {
+				if (!payload.chosenPerks().appliedItems.contains(appliedItem)) {
+					toRemove.add(appliedItem);
+				}
+			}
+			for (PerkyItem perkyItem : toRemove) {
+				removeAttachment(localPlayer, perkyItem);
+			}
+			for (PerkyItem appliedItem : payload.chosenPerks().appliedItems) {
+				if (!bloodstreamAttachment.appliedItems.contains(appliedItem)) {
+					addAttachment(localPlayer, appliedItem);
+				}
+			}
 		}));
-		*///? }
+		//? }
 
 
 		//? if >=1.21.1 {
-		ServerLivingEntityEvents.AFTER_DAMAGE.register(((livingEntity, damageSource, v, v1, b) -> {
-		//? } else {
-		/*ServerLivingEntityEvents.ALLOW_DAMAGE.register(((livingEntity, damageSource, v) -> {
-		*///? }
+		/*ServerLivingEntityEvents.AFTER_DAMAGE.register(((livingEntity, damageSource, v, v1, b) -> {
+		*///? } else {
+		ServerLivingEntityEvents.ALLOW_DAMAGE.register(((livingEntity, damageSource, v) -> {
+		//? }
 			for (PerkyItem attachment : getAttachments(livingEntity)) {
 				attachment.onDamage(livingEntity,damageSource,v);
 			}
 			//? if <=1.20.4
-				//return true;
+				return true;
 		}));
 
 		ServerLivingEntityEvents.AFTER_DEATH.register(((livingEntity, damageSource) -> {
@@ -100,8 +132,8 @@ public class Perky implements ModInitializer {
 		}));
 
 		//? if >1.21.1 {
-		ComponentTooltipAppenderRegistry.addLast(ModComponents.BLOOD_COMPONENT.COMPONENT_FORM);
-		//? }
+		/*ComponentTooltipAppenderRegistry.addLast(ModComponents.BLOOD_COMPONENT.COMPONENT_FORM);
+		*///? }
 	}
 
 	public static BloodstreamAttachment getBloodstreamFromMob(LivingEntity livingEntity) {
@@ -115,40 +147,43 @@ public class Perky implements ModInitializer {
 	}
 
 	public static boolean removeAttachment(LivingEntity livingEntity, PerkyItem item) {
-		BloodstreamAttachment playerAttachment = livingEntity.getAttachedOrElse(ModAttachments.PERKY_ATTACHMENT, new BloodstreamAttachment());
+		BloodstreamAttachment playerAttachment = ModAttachments.PERKY_ATTACHMENT.getOrElse(livingEntity, new BloodstreamAttachment());
 		if (!playerAttachment.appliedItems.contains(item)) {
 			return false;
 		} else {
 			playerAttachment.appliedItems.remove(item);
+			item.onRemoved(livingEntity);
 
 			if (item.attributes != null) {
 				for (PerkyItem.AttributePair attribute : item.attributes) {
 					//? if >=1.21.1 {
-					Holder<Attribute> attr = attribute.holder;
-					 //? } else {
-					/*Attribute attr = attribute.holder.value();
-					*///? }
+					/*Holder<Attribute> attr = attribute.holder;
+					 *///? } else {
+					Attribute attr = attribute.holder.value();
+					//? }
 
 					//? if >=1.21.1 {
-					if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier.id())) {
-					 //? } else {
-					/*if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
-						*///? }
+					/*if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier.id())) {
+					 *///? } else {
+					if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
+						//? }
 						livingEntity.getAttribute(attr).addPermanentModifier(attribute.modifier);
 					}
 				}
 			}
 
-			livingEntity.setAttached(ModAttachments.PERKY_ATTACHMENT,playerAttachment);
+			ModAttachments.PERKY_ATTACHMENT.set(livingEntity,playerAttachment);
 
-			AttachmentTargetImpl attachmentTarget = ((AttachmentTargetImpl) livingEntity);
+			//? if >1.19
+			//AttachmentTargetImpl attachmentTarget = ((AttachmentTargetImpl) livingEntity);
+
 			//? if >=26.2 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, new AttachmentChange(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment));
 			*///? } else if =26.1 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getRegistryAccess()));
 			 *///? } else if =1.21.11 {
-			attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()));
-			 //? } else if >1.21.1 {
+			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()));
+			 *///? } else if >1.21.1 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, new AttachmentSyncPayloadS2C(List.of(AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()))));
 			 *///? }
 			playerAttachment.networkedTo.clear();
@@ -158,22 +193,23 @@ public class Perky implements ModInitializer {
 
 
 	public static boolean addAttachment(LivingEntity livingEntity, PerkyItem item) {
-		BloodstreamAttachment playerAttachment = livingEntity.getAttachedOrElse(ModAttachments.PERKY_ATTACHMENT, new BloodstreamAttachment());
+		BloodstreamAttachment playerAttachment = ModAttachments.PERKY_ATTACHMENT.getOrElse(livingEntity, new BloodstreamAttachment());
 		if (playerAttachment.appliedItems.contains(item)) {
 			return false;
 		} else {
 			playerAttachment.appliedItems.add(item);
-			livingEntity.setAttached(ModAttachments.PERKY_ATTACHMENT,playerAttachment);
+			ModAttachments.PERKY_ATTACHMENT.set(livingEntity,playerAttachment);
 
-			AttachmentTargetImpl attachmentTarget = ((AttachmentTargetImpl) livingEntity);
+			//? if >1.19
+			//AttachmentTargetImpl attachmentTarget = ((AttachmentTargetImpl) livingEntity);
 
 			//? if >=26.2 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, new AttachmentChange(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment));
 			*///? } else if =26.1 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getRegistryAccess()));
 			*///? } else if =1.21.11 {
-			attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()));
-			 //? } else if >1.21.1 {
+			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()));
+			 *///? } else if >1.21.1 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT, new AttachmentSyncPayloadS2C(List.of(AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()))));
 			 *///? }
 			playerAttachment.networkedTo.clear();
@@ -182,8 +218,8 @@ public class Perky implements ModInitializer {
 	}
 
 	public static List<PerkyItem> getAttachments(LivingEntity livingEntity) {
-		if (livingEntity.hasAttached(ModAttachments.PERKY_ATTACHMENT)) {
-			return livingEntity.getAttached(ModAttachments.PERKY_ATTACHMENT).appliedItems;
+		if (ModAttachments.PERKY_ATTACHMENT.has(livingEntity)) {
+			return ModAttachments.PERKY_ATTACHMENT.get(livingEntity).appliedItems;
 		}
 		return List.of();
 	}

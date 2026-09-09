@@ -1,12 +1,17 @@
 package org.agmas.mixin;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.agmas.Perky;
 import org.agmas.accessors.PlayerAccessor;
+import org.agmas.attachment.BloodstreamAttachment;
 import org.agmas.attachment.PerkyItem;
 
 //? if <1.21.1
-//import org.agmas.network.OldVersionPerkyNetworkingPayload;
+import org.agmas.network.OldVersionPerkyNetworkingPayload;
+import org.agmas.init.ModAttachments;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -53,20 +58,6 @@ public class PerkyTickMixin implements PlayerAccessor {
 
 			attachment.tick(p);
 		}
-
-		//? if <=1.20.4 {
-		/*if (p.hasAttached(ModAttachments.PERKY_ATTACHMENT) && !p.level().isClientSide()) {
-			PerkyPlayerAttachment playerAttachment = p.getAttached(ModAttachments.PERKY_ATTACHMENT);
-			for (Player player : p.level().players()) {
-				if (!playerAttachment.networkedTo.contains(player.getUUID())) {
-					if (player.distanceTo(p) < 250) {
-						playerAttachment.networkedTo.add(player.getUUID());
-						ServerPlayNetworking.send((ServerPlayer) player, new OldVersionPerkyNetworkingPayload(p.getId(),playerAttachment));
-					}
-				}
-			}
-		}
-		*///? }
 	}
 
 	@Override

@@ -1,16 +1,16 @@
 package org.agmas.client.mixin.newRenderingEngineMixins;
 
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.agmas.accessors.PlayerAccessor;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 //? if >=1.21.4 {
-import net.minecraft.world.entity.Avatar;
+/*import net.minecraft.world.entity.Avatar;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import org.agmas.client.PerkyRenderKeys;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,8 +28,8 @@ public class AddRenderStateMixin {
 		avatarRenderState.setData(PerkyRenderKeys.shouldRenderRightLeg, !((PlayerAccessor) avatar).perky$rightLegDisabled());
 	}
 }
-//? } else {
+*///? } else {
 
-/*@Mixin(Minecraft.class)
+@Mixin(Minecraft.class)
 public class AddRenderStateMixin {}
-*///? }
+//? }

@@ -29,7 +29,7 @@ public class NoArmBinding extends PerkyItem {
             if (livingEntity instanceof Player pl) {
                 pl.getInventory().add(offhandStack);
             }
-            livingEntity.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
+            offhandStack.shrink(99999);
         }
         super.tick(livingEntity);
     }

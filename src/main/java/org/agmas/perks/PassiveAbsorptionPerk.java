@@ -14,7 +14,7 @@ public class PassiveAbsorptionPerk extends PerkyItem {
     @Override
     public void tick(LivingEntity livingEntity) {
         if (((PlayerAccessor)livingEntity).perky$timeSinceLastDamage() > 20*30) {
-            if (!livingEntity.hasEffect(MobEffects.ABSORPTION) && !livingEntity.level().isClientSide()) {
+            if (!livingEntity.hasEffect(MobEffects.ABSORPTION) && !livingEntity.level.isClientSide()) {
                 livingEntity.addEffect(
                         new MobEffectInstance(MobEffects.ABSORPTION, 20*30,1, true, false));
             }

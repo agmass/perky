@@ -3,10 +3,13 @@
   "package": "org.agmas.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CannotOffhandInventoryMixin",
+    "CannotOffhandMixin",
     "ChanceToSpawnSinglehandedMixin",
     "PerkModifyDamageMixin",
     "PerkModifyTridentRiptideMixin",
-    "PerkyTickMixin"
+    "PerkyTickMixin",
+    "porting.AttachmentMixin"
   ],
   "injectors": {
     "defaultRequire": 1

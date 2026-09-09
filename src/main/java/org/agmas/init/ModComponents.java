@@ -9,7 +9,7 @@ public class ModComponents {
                     "blood_component",
                     BloodstreamAttachment.CODEC
                     //? if >1.20.1
-                    , BloodstreamAttachment.STREAM_CODEC
+                    //, BloodstreamAttachment.STREAM_CODEC
             );
 
     public static void init() {

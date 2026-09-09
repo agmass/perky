@@ -15,9 +15,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 //? if >=1.21.4
-import net.minecraft.client.renderer.rendertype.RenderTypes;
+//import net.minecraft.client.renderer.rendertype.RenderTypes;
 //? if <1.21.4
-//ipmort net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.Entity;
 import org.agmas.block.entity.ConsoleBlockEntity;
 import org.agmas.client.render.blockEntity.ConsoleBlockEntityRenderState;
@@ -25,7 +25,7 @@ import org.agmas.porting.PPIdentifier;
 
 public class ConsoleModel extends Model
 		//? if >=1.21.4
-		<ConsoleBlockEntityRenderState>
+		//<ConsoleBlockEntityRenderState>
 {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(PPIdentifier.of("console").id, "main");
 	public static final PPIdentifier textureLocation = PPIdentifier.of("textures/block/console.png");
@@ -39,10 +39,10 @@ public class ConsoleModel extends Model
 
 	public ConsoleModel(ModelPart root) {
 		//? if >1.21.4 {
-		super(root, RenderTypes::entityTranslucent);
-		//? } else {
-		/*super(RenderType::entityTranslucent);
-		 *///? }
+		/*super(root, RenderTypes::entityTranslucent);
+		*///? } else {
+		super(RenderType::entityTranslucent);
+		 //? }
 		this.console = root.getChild("Console");
 		this.body = this.console.getChild("body");
 		this.lever = this.body.getChild("lever");
@@ -93,15 +93,15 @@ public class ConsoleModel extends Model
 
 	public void setupAnim(ConsoleBlockEntityRenderState console) {
 		//? if >=1.21.4
-		super.setupAnim(console);
+		//super.setupAnim(console);
 		fillant.visible = console.shouldShowFillant;
 
 	}
 
 	//? if <1.21.4 {
-	/*@Override
+	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h, float k) {
 		console.render(poseStack,vertexConsumer,i,j,f,g,h,k);
 	}
-	*///? }
+	//? }
 }

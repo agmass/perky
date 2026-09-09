@@ -5,20 +5,26 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 //? if >1.20.1
-import net.fabricmc.loader.impl.util.log.Log;
+//import net.fabricmc.loader.impl.util.log.Log;
+import io.netty.buffer.ByteBufUtil;
+import io.netty.handler.codec.DecoderException;
+import io.netty.handler.codec.EncoderException;
 import net.fabricmc.loader.impl.util.log.LogCategory;
+//? if >=1.21.1 {
+/*import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.Utf8String;
-//? if >=1.21.1
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.StreamCodec;
+
+*///? }
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipProvider;
 import org.agmas.init.ModRegistries;
 import org.agmas.porting.PPIdentifier;
 
 import java.awt.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +32,7 @@ import java.util.function.Consumer;
 
 public class BloodstreamAttachment
     //? if >1.21.1
-    implements TooltipProvider
+    //implements TooltipProvider
 {
 
     public static final Codec<BloodstreamAttachment> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -37,10 +43,10 @@ public class BloodstreamAttachment
     public BloodstreamAttachment(List<String> perkyItemStrings) {
         for (String perkyItemString : perkyItemStrings) {
             //? if >=1.21.11 {
-            appliedItems.add(ModRegistries.PERKY_ITEM.get(PPIdentifier.parse(perkyItemString).id).get().value());
-             //? } else {
-            /*appliedItems.add(ModRegistries.PERKY_ITEM.get(PPIdentifier.parse(perkyItemString).id));
-            *///? }
+            /*appliedItems.add(ModRegistries.PERKY_ITEM.get(PPIdentifier.parse(perkyItemString).id).get().value());
+             *///? } else {
+            appliedItems.add(ModRegistries.PERKY_ITEM.get(PPIdentifier.parse(perkyItemString).id));
+            //? }
         }
     }
     public BloodstreamAttachment() {}
@@ -50,7 +56,7 @@ public class BloodstreamAttachment
     public ArrayList<UUID> networkedTo = new ArrayList<>();
     // This is like, Really Jank, LOL
     //? if >=1.21.1 {
-    public static StreamCodec<ByteBuf, BloodstreamAttachment> STREAM_CODEC = new StreamCodec<ByteBuf, BloodstreamAttachment>() {
+    /*public static StreamCodec<ByteBuf, BloodstreamAttachment> STREAM_CODEC = new StreamCodec<ByteBuf, BloodstreamAttachment>() {
         public BloodstreamAttachment decode(ByteBuf byteBuf) {
             return BloodstreamAttachment.decode(byteBuf);
         }
@@ -59,16 +65,16 @@ public class BloodstreamAttachment
             perkyAttachment.encode(byteBuf,perkyAttachment);
         }
     };
-    //?}
+    *///?}
 
 
     public ArrayList<String> getAppliedItemsStrings() {
         ArrayList<String> stringarr = new ArrayList<>();
         for (PerkyItem appliedItem : appliedItems) {
             //? if <1.21.11
-            //stringarr.add(ModRegistries.PERKY_ITEM.getResourceKey(appliedItem).get().location().toString());
+            stringarr.add(ModRegistries.PERKY_ITEM.getResourceKey(appliedItem).get().location().toString());
             //? if >=1.21.11
-            stringarr.add(ModRegistries.PERKY_ITEM.getResourceKey(appliedItem).get().identifier().toString());
+            //stringarr.add(ModRegistries.PERKY_ITEM.getResourceKey(appliedItem).get().identifier().toString());
         }
         return stringarr;
     }
@@ -78,15 +84,11 @@ public class BloodstreamAttachment
         while (byteBuf.isReadable()) {
             if (byteBuf.readByte() == (byte)254) break;
             byteBuf.readerIndex(byteBuf.readerIndex()-1);
-            Log.info(LogCategory.GENERAL, byteBuf.readableBytes()+"");
             //? if <=1.20.1 {
-            /*String id = readString(byteBuf,32767);
-             *///? } else {
-            String id = Utf8String.read(byteBuf, 32767);
-            //? }
-            Log.info(LogCategory.GENERAL, id);
-
-            Log.info(LogCategory.GENERAL, byteBuf.readableBytes()+"");
+            String id = readString(byteBuf,32767);
+             //? } else {
+            /*String id = Utf8String.read(byteBuf, 32767);
+            *///? }
             if (id.equals("")) break;
 
             if (ModRegistries.PERKY_ITEM.getOptional(PPIdentifier.parse(id).id).isPresent()) {
@@ -99,16 +101,16 @@ public class BloodstreamAttachment
     public void encode(ByteBuf byteBuf, BloodstreamAttachment perkyAttachment) {
         for (PerkyItem item : perkyAttachment.appliedItems) {
             //? if <=1.20.1 {
-            /*writeString(byteBuf, PerkyItem.getKey(item).id.toString(), 32767);
-            *///? } else {
-            Utf8String.write(byteBuf, PerkyItem.getKey(item).id.toString(), 32767);
-             //? }
+            writeString(byteBuf, PerkyItem.getKey(item).id.toString(), 32767);
+            //? } else {
+            /*Utf8String.write(byteBuf, PerkyItem.getKey(item).id.toString(), 32767);
+             *///? }
         }
         byteBuf.writeByte(254);
     }
 
     //? if >1.21.1 {
-    @Override
+    /*@Override
     public void addToTooltip(Item.TooltipContext tooltipContext, Consumer<Component> consumer, TooltipFlag tooltipFlag, DataComponentGetter dataComponentGetter) {
         consumer.accept(Component.empty());
         consumer.accept(Component.translatable("perky.bloodstream").withColor(new Color(130,0,0).getRGB()));
@@ -117,11 +119,11 @@ public class BloodstreamAttachment
             consumer.accept(Component.translatable("perky." + (item.worth > 0 ? "perk" : "binding") + "." + id.id.getNamespace() + "." + id.id.getPath()));
         }
     }
-    //? }
+    *///? }
 
     //? if <=1.20.1 {
 
-    /*public static String readString(ByteBuf byteBuf, int i) {
+    public static String readString(ByteBuf byteBuf, int i) {
         int j = ByteBufUtil.utf8MaxBytes(i);
         int k = readVInt(byteBuf);
         if (k > j) {
@@ -198,5 +200,5 @@ public class BloodstreamAttachment
         byteBuf.writeByte(i);
         return byteBuf;
     }
-    *///? }
+    //? }
 }

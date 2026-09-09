@@ -7,11 +7,11 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 //? if >=1.21.11 {
-import net.minecraft.resources.Identifier;
-//? } else {
+/*import net.minecraft.resources.Identifier;
+*///? } else {
 
-/*import net.minecraft.resources.ResourceLocation;
- *///? }
+import net.minecraft.resources.ResourceLocation;
+ //? }
 import org.agmas.attachment.PerkyItem;
 import org.agmas.init.ModRegistries;
 import org.agmas.porting.PPIdentifier;
@@ -36,31 +36,31 @@ public class PerkyItemArgument implements ArgumentType<PerkyItem> {
     }
 
     //? if >=1.21.1 {
-    @Override
+    /*@Override
     public <S> PerkyItem parse(StringReader reader, S source) throws CommandSyntaxException {
         return getItem(PPIdentifier.read(reader));
     }
-    //? }
+    *///? }
 
     PerkyItem getItem(PPIdentifier identifier) {
         //? if >=1.21.11 {
-        return ModRegistries.PERKY_ITEM.getValue(identifier.id);
-         //? } else {
-        /*//? if >=1.21.4 {
-        return ModRegistries.PERKY_ITEM.get(identifier.id).get().value();
-        //? } else {
-        /^return ModRegistries.PERKY_ITEM.get(identifier.id);
-        ^///? }
-        *///? }
+        /*return ModRegistries.PERKY_ITEM.getValue(identifier.id);
+         *///? } else {
+        //? if >=1.21.4 {
+        /*return ModRegistries.PERKY_ITEM.get(identifier.id).get().value();
+        *///? } else {
+        return ModRegistries.PERKY_ITEM.get(identifier.id);
+        //? }
+        //? }
     }
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         //? if >=1.21.11 {
-        for (Identifier identifier : ModRegistries.PERKY_ITEM.keySet()) {
-        //? } else {
-        /*for (ResourceLocation identifier : ModRegistries.PERKY_ITEM.keySet()) {
-         *///? }
+        /*for (Identifier identifier : ModRegistries.PERKY_ITEM.keySet()) {
+        *///? } else {
+        for (ResourceLocation identifier : ModRegistries.PERKY_ITEM.keySet()) {
+         //? }
             builder.suggest(identifier.toString());
         }
         return builder.buildFuture();

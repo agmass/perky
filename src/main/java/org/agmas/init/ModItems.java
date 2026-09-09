@@ -29,14 +29,13 @@ public class ModItems {
             , new Item.Properties()
                     .food(
                              //? if >=1.21.1 {
-                            new FoodProperties.Builder().alwaysEdible().nutrition(0).saturationModifier(0f).build())
-                             //? } else {
-                            /*new FoodProperties.Builder().alwaysEat().nutrition(0).saturationMod(0f).build())
-            *///? }
+                            /*new FoodProperties.Builder().alwaysEdible().nutrition(0).saturationModifier(0f).build())
+                             *///? } else {
+                            new FoodProperties.Builder().alwaysEat().nutrition(0).saturationMod(0f).build())
+            //? }
     );
 
     public static final Item SYRINGE = register("syringe", Item::new, new Item.Properties());
-
 
     public static <T extends Item> T register(String name, Function<Item.Properties, T> itemFactory, Item.Properties settings) {
 
@@ -46,8 +45,8 @@ public class ModItems {
 
         T item = itemFactory.apply(settings
                 //? if >=1.21.4 {
-                .setId(itemKey)
-                 //? }
+                /*.setId(itemKey)
+                 *///? }
         );
 
 

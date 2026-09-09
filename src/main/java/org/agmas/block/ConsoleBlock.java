@@ -7,16 +7,18 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 //? if >1.21.1
-import net.minecraft.world.level.ScheduledTickAccess;
+//import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,9 +27,12 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import org.agmas.attachment.BloodstreamAttachment;
+import org.agmas.attachment.PerkyItem;
 import org.agmas.block.entity.ConsoleBlockEntity;
 import org.agmas.init.ModAttachments;
 import org.agmas.init.ModBlocks;
+import org.agmas.init.ModComponents;
+import org.agmas.init.ModItems;
 import org.agmas.network.OpenPerkyMenuPayload;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,13 +46,13 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
     }
 
     //? if >1.20.1 {
-    public static final MapCodec<ConsoleBlock> CODEC = simpleCodec(ConsoleBlock::new);
+    /*public static final MapCodec<ConsoleBlock> CODEC = simpleCodec(ConsoleBlock::new);
 
     @Override
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return CODEC;
     }
-    //?}
+    *///?}
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -106,15 +111,15 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
 
     //? if <1.21.1 {
 
-    /*@Override
+    @Override
     public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-    *///? } else if =1.21.1 {
+    //? } else if =1.21.1 {
     /*@Override
     protected BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
     *///? } else {
-    @Override
+    /*@Override
     protected BlockState updateShape(BlockState blockState, LevelReader levelReader, ScheduledTickAccess scheduledTickAccess, BlockPos blockPos, Direction direction, BlockPos blockPos2, BlockState blockState2, RandomSource randomSource) {
-    //? }
+    *///? }
 
         Direction adjacent = blockState.getValue(FACING);
         Direction adjacentVertical;
@@ -136,21 +141,53 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
         }
 
         //? if >1.21.1 {
-        return super.updateShape(blockState, levelReader, scheduledTickAccess, blockPos, direction, blockPos2, blockState2, randomSource);
-        //? } else {
-        /*return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
-         *///? }
+        /*return super.updateShape(blockState, levelReader, scheduledTickAccess, blockPos, direction, blockPos2, blockState2, randomSource);
+        *///? } else {
+        return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+         //? }
     }
 
+
     //? if >=1.21.1 {
-    protected InteractionResult useWithoutItem(final BlockState state, final Level level, final BlockPos pos, final Player player, final BlockHitResult hitResult) {
-    //? } else {
-    /*@Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-    *///? }
+    /*protected InteractionResult useWithoutItem(final BlockState state, final Level level, final BlockPos pos, final Player player, final BlockHitResult hitResult) {
+    *///? } else {
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    //? }
         if (!level.isClientSide()) {
-            player.getAttachedOrElse(ModAttachments.PERKY_ATTACHMENT, new BloodstreamAttachment()).usingConsole = true;
-            ServerPlayNetworking.send(((ServerPlayer) player), new OpenPerkyMenuPayload(((ConsoleBlockEntity) level.getBlockEntity(findParent(pos,state,level))).attachedBlood));
+            ConsoleBlockEntity consoleBlockEntity = ((ConsoleBlockEntity) level.getBlockEntity(findParent(pos,state,level)));
+
+            if (player.isShiftKeyDown() && consoleBlockEntity.hasBottleAttached && player.getMainHandItem().isEmpty()) {
+                if (consoleBlockEntity.attachedBlood.appliedItems.isEmpty()) {
+                    player.addItem(Items.GLASS_BOTTLE.getDefaultInstance());
+                } else {
+                    ItemStack bottle = ModItems.BLOOD_BOTTLE.getDefaultInstance();
+                    ModComponents.BLOOD_COMPONENT.set(bottle, consoleBlockEntity.attachedBlood);
+                    consoleBlockEntity.hasBottleAttached = false;
+                    consoleBlockEntity.attachedBlood = new BloodstreamAttachment();
+                    player.addItem(bottle);
+                }
+                consoleBlockEntity.hasBottleAttached = false;
+                return InteractionResult.SUCCESS;
+            }
+            if (ModComponents.BLOOD_COMPONENT.has(player.getMainHandItem()) && (consoleBlockEntity.hasBottleAttached || player.getMainHandItem().is(ModItems.BLOOD_BOTTLE))) {
+                consoleBlockEntity.hasBottleAttached = true;
+                for (PerkyItem appliedItem : ModComponents.BLOOD_COMPONENT.get(player.getMainHandItem()).appliedItems) {
+                    if (!consoleBlockEntity.attachedBlood.appliedItems.contains(appliedItem)) {
+                        consoleBlockEntity.attachedBlood.appliedItems.add(appliedItem);
+                    }
+                }
+                player.getMainHandItem().shrink(1);
+                return InteractionResult.CONSUME;
+            }
+            if (player.getMainHandItem().is(Items.GLASS_BOTTLE) && !consoleBlockEntity.hasBottleAttached) {
+                consoleBlockEntity.hasBottleAttached = true;
+                player.getMainHandItem().shrink(1);
+                return InteractionResult.CONSUME;
+            }
+
+            ModAttachments.PERKY_ATTACHMENT.getOrElse(player, new BloodstreamAttachment()).usingConsole = true;
+            ServerPlayNetworking.send(((ServerPlayer) player), new OpenPerkyMenuPayload(consoleBlockEntity.attachedBlood));
         }
         return InteractionResult.SUCCESS;
     }
