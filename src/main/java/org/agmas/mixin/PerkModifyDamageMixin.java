@@ -13,13 +13,13 @@ import org.spongepowered.asm.mixin.Mixin;
 public class PerkModifyDamageMixin {
 
 	//? if <1.21.4 {
-	@WrapMethod(method = "hurt")
+	/*@WrapMethod(method = "hurt")
 	public boolean modifyHurt(DamageSource damageSource, float f, Operation<Boolean> original) {
-	//? } else {
+	*///? } else {
 	
-	/*@WrapMethod(method = "hurtServer")
+	@WrapMethod(method = "hurtServer")
 	public boolean modifyHurt(ServerLevel serverLevel, DamageSource damageSource, float f, Operation<Boolean> original) {
-	*///? }
+	//? }
 		float damage = f;
 		for (PerkyItem attachment : Perky.getAttachments(((LivingEntity) (Object) this))) {
 			float modifiedDamage = attachment.modifyDamage(((LivingEntity) (Object)this),damageSource,damage);
@@ -28,9 +28,9 @@ public class PerkModifyDamageMixin {
 			}
 		}
 		//? if <1.21.4
-		return original.call(damageSource,damage);
+		//return original.call(damageSource,damage);
 		//? if >1.21.4
-		//return original.call(serverLevel, damageSource,damage);
+		return original.call(serverLevel, damageSource,damage);
 
 	}
 }

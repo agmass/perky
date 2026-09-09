@@ -2,13 +2,13 @@ package org.agmas.mixin;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-//? if <1.21.1 {
-import net.minecraft.world.entity.monster.AbstractSkeleton;
+//? if <=1.21.1 {
+/*import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Zombie;
-//? } else {
-/*import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
+*///? } else {
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
 import net.minecraft.world.entity.monster.zombie.Zombie;
-*///? }
+//? }
 import org.agmas.Perky;
 import org.agmas.accessors.PlayerAccessor;
 import org.agmas.attachment.PerkyItem;

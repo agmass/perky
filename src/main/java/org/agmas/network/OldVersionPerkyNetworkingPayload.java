@@ -1,7 +1,7 @@
 package org.agmas.network;
 
 //? if <=1.20.4 {
-import net.fabricmc.fabric.api.networking.v1.FabricPacket;
+/*import net.fabricmc.fabric.api.networking.v1.FabricPacket;
 import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.fabricmc.loader.impl.util.log.Log;
 import net.fabricmc.loader.impl.util.log.LogCategory;
@@ -33,4 +33,4 @@ public record OldVersionPerkyNetworkingPayload(int id, BloodstreamAttachment pla
         return PACKET_TYPE;
     }
 }
-//? }
+*///? }

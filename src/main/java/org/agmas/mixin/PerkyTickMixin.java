@@ -10,13 +10,15 @@ import org.agmas.attachment.BloodstreamAttachment;
 import org.agmas.attachment.PerkyItem;
 
 //? if <1.21.1
-import org.agmas.network.OldVersionPerkyNetworkingPayload;
+//import org.agmas.network.OldVersionPerkyNetworkingPayload;
 import org.agmas.init.ModAttachments;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 @Mixin(LivingEntity.class)
 public class PerkyTickMixin implements PlayerAccessor {
@@ -47,6 +49,7 @@ public class PerkyTickMixin implements PlayerAccessor {
 		leftLegDisabled = false;
 		rightLegDisabled = false;
 		for (PerkyItem attachment : Perky.getAttachments(p)) {
+			if (attachment == null) continue;
 			if (attachment.modifiesVisibleParts()) {
 				mainArmDisabled = !attachment.shouldRenderPart("mainArm");
 				offArmDisabled = !attachment.shouldRenderPart("offArm");

@@ -7,7 +7,7 @@ import org.agmas.accessors.PlayerAccessor;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 //? if >=1.21.4 {
-/*import net.minecraft.world.entity.Avatar;
+import net.minecraft.world.entity.Avatar;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
@@ -28,8 +28,8 @@ public class AddRenderStateMixin {
 		avatarRenderState.setData(PerkyRenderKeys.shouldRenderRightLeg, !((PlayerAccessor) avatar).perky$rightLegDisabled());
 	}
 }
-*///? } else {
+//? } else {
 
-@Mixin(Minecraft.class)
+/*@Mixin(Minecraft.class)
 public class AddRenderStateMixin {}
-//? }
+*///? }

@@ -1,5 +1,6 @@
 package org.agmas.init;
 
+import com.mojang.serialization.Codec;
 import org.agmas.attachment.BloodstreamAttachment;
 import org.agmas.porting.PPComponentOrNBT;
 
@@ -9,7 +10,7 @@ public class ModComponents {
                     "blood_component",
                     BloodstreamAttachment.CODEC
                     //? if >1.20.1
-                    //, BloodstreamAttachment.STREAM_CODEC
+                    , BloodstreamAttachment.STREAM_CODEC
             );
 
     public static void init() {

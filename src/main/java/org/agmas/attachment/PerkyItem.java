@@ -49,16 +49,16 @@ public class PerkyItem {
         if (attributes != null) {
             for (PerkyItem.AttributePair attribute : attributes) {
                 //? if >=1.21.1 {
-                /*Holder<Attribute> attr = attribute.holder;
-                *///? } else {
-                Attribute attr = attribute.holder.value();
-                //? }
+                Holder<Attribute> attr = attribute.holder;
+                //? } else {
+                /*Attribute attr = attribute.holder.value();
+                *///? }
 
                 //? if >=1.21.1 {
-                /*if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier.id())) {
-                *///? } else {
-                if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
-                //? }
+                if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier.id())) {
+                //? } else {
+                /*if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
+                *///? }
                     livingEntity.getAttribute(attr).addPermanentModifier(attribute.modifier);
                 }
             }

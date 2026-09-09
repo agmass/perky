@@ -11,14 +11,15 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-//? if >1.19 {
-/*import net.minecraft.world.level.storage.ValueInput;
+//? if >1.21.1 {
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-*///? }
+//? }
 import org.agmas.attachment.BloodstreamAttachment;
 import org.agmas.block.ConsoleBlock;
 import org.agmas.init.ModEntities;
@@ -37,8 +38,8 @@ public class ConsoleBlockEntity extends BlockEntity {
         shouldRenderModel = blockState.getValue(ConsoleBlock.PART) == ConsoleBlock.ConsoleBlockPart.LOWER_LEFT;
     }
 
-    //? if >1.19 {
-    /*@Override
+    //? if >1.21.1 {
+    @Override
     protected void saveAdditional(ValueOutput valueOutput) {
         super.saveAdditional(valueOutput);
         valueOutput.store("hasBottleAttached", Codec.BOOL, hasBottleAttached);
@@ -50,10 +51,6 @@ public class ConsoleBlockEntity extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-        return saveWithoutMetadata(provider);
-    }
 
     @Override
     protected void loadAdditional(ValueInput valueInput) {
@@ -61,20 +58,57 @@ public class ConsoleBlockEntity extends BlockEntity {
         attachedBlood = valueInput.read("bloodstream", BloodstreamAttachment.CODEC).orElseGet(BloodstreamAttachment::new);
         hasBottleAttached = valueInput.getBooleanOr("hasBottleAttached", false);
     }
-    *///? } else {
+    //? } else {
 
-    @Override
-    protected void saveAdditional(CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
+    /*@Override
+    protected void saveAdditional(CompoundTag compoundTag
+                                //? if >=1.20.4
+                                  ,  HolderLookup.Provider provider
+    ) {
+        super.saveAdditional(compoundTag
+                //? if >=1.20.4
+                , provider
+        );
         compoundTag.putBoolean("hasBottleAttached", hasBottleAttached);
-        compoundTag.put("bloodstream", BloodstreamAttachment.CODEC.encodeStart(NbtOps.INSTANCE, attachedBlood).get().left().get());
+        compoundTag.put("bloodstream", BloodstreamAttachment.CODEC.encodeStart(NbtOps.INSTANCE, attachedBlood)
+                //? if <1.21.1
+                //.get().left().get()
+                //? if >=1.21.1
+                .getOrThrow()
+        );
     }
 
     @Override
-    public void load(CompoundTag compoundTag) {
-        super.load(compoundTag);
+    public void setChanged() {
+        super.setChanged();
+
+        if (level == null) return;
+
+        BlockState state = getBlockState();
+        level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_ALL);
+    }
+
+    @Override
+    //? if >=1.20.4
+    public void loadAdditional
+    //? if <1.20.4
+    //public void load
+            (CompoundTag compoundTag
+                     //? if >=1.21.1
+            ,  HolderLookup.Provider provider
+    ) {
+
+        //? if >=1.21.1
+        super.loadAdditional(compoundTag, provider);
+        //? if <1.21.1
+        //super.load(compoundTag);
         if (compoundTag.contains("bloodstream")) {
-            attachedBlood = BloodstreamAttachment.CODEC.decode(NbtOps.INSTANCE, compoundTag.get("bloodstream")).get().left().get().getFirst();
+            attachedBlood = BloodstreamAttachment.CODEC.decode(NbtOps.INSTANCE, compoundTag.get("bloodstream"))
+                    //? if <1.21.1
+                    //.get().left().get()
+                    //? if >=1.21.1
+                    .getOrThrow()
+                    .getFirst();
             hasBottleAttached = compoundTag.getBoolean("hasBottleAttached");
         } else {
             attachedBlood = new BloodstreamAttachment();
@@ -82,14 +116,22 @@ public class ConsoleBlockEntity extends BlockEntity {
         }
     }
 
-    @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
 
     @Override
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+    *///? }
+    //? if <=1.20.4 {
+    /*@Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
+    }
+    *///? } else {
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        return saveWithoutMetadata(provider);
     }
     //? }
 }

@@ -1,7 +1,7 @@
 package org.agmas.init;
 
 //? if >1.21.1
-//import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
 import org.agmas.attachment.BloodstreamAttachment;
 import org.agmas.porting.PPAttachment;
 import org.agmas.porting.PPIdentifier;
@@ -12,9 +12,9 @@ public class ModAttachments {
             new PPAttachment(
                     "perky_attachment",
                     ()-> new BloodstreamAttachment(),
-                    BloodstreamAttachment.CODEC
                     //? if >1.21.1
-                    //, BloodstreamAttachment.STREAM_CODEC
+                    BloodstreamAttachment.STREAM_CODEC,
+                    BloodstreamAttachment.CODEC
             );
 
     public static void init() {}

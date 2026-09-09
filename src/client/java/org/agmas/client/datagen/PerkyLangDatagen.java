@@ -22,21 +22,21 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         super(dataOutput, registryLookup);
     }
      *///? } else if >=1.21.1 {
-    /*public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
-    *///? } else {
-    public PerkyLangDatagen(FabricDataOutput dataOutput) {
+    //? } else {
+    /*public PerkyLangDatagen(FabricDataOutput dataOutput) {
         super(dataOutput);
     }
-    //? }
+    *///? }
 
     //? if >=1.21.1 {
-    /*@Override
+    @Override
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder translationBuilder) {
-    *///? } else {
-    public void generateTranslations(TranslationBuilder translationBuilder) {
-    //? }
+    //? } else {
+    /*public void generateTranslations(TranslationBuilder translationBuilder) {
+    *///? }
 
         translationBuilder.add(PerkyCommands.PERK, "perk");
         translationBuilder.add(PerkyCommands.BINDING, "binding");
@@ -46,6 +46,9 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         translationBuilder.add(PerkyCommands.REMOVE_SUCCESS, "Removed %1$s %3$s from %2$s");
         translationBuilder.add(PerkyCommands.REMOVE_ALREADY_HAS_ITEM, "%2$s does not have %1$s %3$s");
         translationBuilder.add(PerkyCommands.LIST, "%s's perk(s) and binding(s): %s");
+
+        translationBuilder.add(ModItems.BLOOD_BOTTLE, "Blood Bottle");
+        translationBuilder.add(ModItems.SYRINGE, "Syringe");
 
         translationBuilder.add("perky.perk.perky.fishermans_charm", "Fisherman's Charm");
         translationBuilder.add("perky.perk.perky.fishermans_charm.desc", "Increases Luck");
@@ -61,6 +64,7 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
 
         translationBuilder.add("perky.perk.perky.singlehanded", "Singlehanded");
         translationBuilder.add("perky.perk.perky.singlehanded.desc", "Removes your off-hand, rendering it unusable.");
+        translationBuilder.add("perky.bloodstream", "Bloodstream");
     }
 
 }

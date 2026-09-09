@@ -3,15 +3,19 @@ package org.agmas.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.loader.impl.util.log.Log;
+import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+//? if >1.19 {
 //? if <=1.21.11
-//import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphics;
+//? }
 //? if >=26.1
 //import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 //? if >1.21.1
-//import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import org.agmas.attachment.BloodstreamAttachment;
@@ -20,6 +24,7 @@ import org.agmas.init.ModAttachments;
 import org.agmas.init.ModRegistries;
 import org.agmas.network.ChangePerksPayload;
 import org.agmas.porting.PPIdentifier;
+import org.joml.Matrix3x2fStack;
 
 import java.awt.*;
 import java.util.List;
@@ -48,21 +53,19 @@ public class PerkyScreen extends Screen {
         int guiGraphicsWidth = guiGraphics.guiWidth();
         int guiGraphicsHeight = guiGraphics.guiHeight();
     *///? } else if >1.19 {
-    /*@Override
+    @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float f) {
         super.render(guiGraphics, mouseX, mouseY, f);
         int guiGraphicsWidth = guiGraphics.guiWidth();
         int guiGraphicsHeight = guiGraphics.guiHeight();
-    *///? } else {
+    //? } else {
 
-    @Override
+    /*@Override
     public void render(PoseStack guiGraphics, int mouseX, int mouseY, float f) {
         super.render(guiGraphics, mouseX, mouseY, f);
         int guiGraphicsWidth = width;
         int guiGraphicsHeight = height;
-    //? }
-
-
+    *///? }
         int width_ = Math.min(guiGraphicsWidth/2, guiGraphicsHeight);
         int height_ = (int)(width_ *0.736363636f);
 
@@ -109,10 +112,10 @@ public class PerkyScreen extends Screen {
 
                 if (selectedItems.appliedItems.contains(perkyItem)) {
                     //? if >1.19
-                    //guiGraphics.
+                    guiGraphics.
                             fill(
                                     //? if <=1.19
-                                    guiGraphics,
+                                    //guiGraphics,
                                     perkX,perkY,perkX+16,perkY+16, new Color(0, 234, 255,75).getRGB());
                 }
                 if (mouseX > perkX && mouseX < perkX + 16) {
@@ -120,7 +123,7 @@ public class PerkyScreen extends Screen {
                         hovered  = perkyItem;
                         renderPerkyTooltip(
                                 //? if <=1.19
-                                this,
+                                //this,
                                 guiGraphics, perkyItem, PPIdentifier.of(resourceKey),
                                 perkX,
                                 perkY,
@@ -151,10 +154,10 @@ public class PerkyScreen extends Screen {
 
                 if (selectedItems.appliedItems.contains(perkyItem)) {
                     //? if >1.19
-                    //guiGraphics.
+                    guiGraphics.
                     fill(
                             //? if <=1.19
-                            guiGraphics,
+                            //guiGraphics,
                             perkX,perkY,perkX+16,perkY+16, new Color(0, 234, 255,75).getRGB());
 
                 }
@@ -164,7 +167,7 @@ public class PerkyScreen extends Screen {
                         hovered  = perkyItem;
                         renderPerkyTooltip(
                                 //? if <=1.19
-                                this,
+                                //this,
                                 guiGraphics, perkyItem, PPIdentifier.of(resourceKey),
                                 perkX,
                                 perkY,
@@ -187,49 +190,49 @@ public class PerkyScreen extends Screen {
 
     //? if >=26.1 {
     /*public static void simpleBlit(PPIdentifier identifier, GuiGraphicsExtractor graphics, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
-    *///? else if >1.19 {
-    /*public static void simpleBlit(PPIdentifier identifier, GuiGraphics graphics, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
-    *///? else {
-    public static void simpleBlit(PPIdentifier identifier, PoseStack stack, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
-    //? }
+    *///? } else if >1.19 {
+    public static void simpleBlit(PPIdentifier identifier, GuiGraphics graphics, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
+    //? } else {
+    /*public static void simpleBlit(PPIdentifier identifier, PoseStack stack, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
+    *///? }
 
     //? if >1.21.1 {
-        /*graphics.blit(identifier.id,
+        graphics.blit(identifier.id,
                 x,y,
                 endX,endY,
                 0,1,0,1);
-        *///? } else if >1.19 {
+        //? } else if >1.19 {
 
         /*graphics.blit(identifier.id,
                 x,y,0,
                 0,0,
                 endX-x, endY-y,
                 textureWidth,textureHeight
-        );*/
-        //? } else {
-        RenderSystem.setShaderTexture(0, BACKGROUND_LOCATION);
+        );
+        *///? } else {
+        /*RenderSystem.setShaderTexture(0, identifier.id);
         blit(stack,
                 x,y,0,
                 0,0,
                 endX-x, endY-y,
                 textureWidth,textureHeight
         );
-        //? }
+        *///? }
     }
 
     //? if >1.21.1 {
-    /*@Override
+    @Override
     public boolean mouseClicked(MouseButtonEvent mouseButtonEvent, boolean bl) {
         onClick();
         return super.mouseClicked(mouseButtonEvent, bl);
     }
-    *///? } else {
-    @Override
+    //? } else {
+    /*@Override
     public boolean mouseClicked(double d, double e, int i) {
         onClick();
         return super.mouseClicked(d, e, i);
     }
-    //? }
+    *///? }
 
     public void onClick() {
         if (!selectedItems.appliedItems.contains(hovered)) {
@@ -246,35 +249,41 @@ public class PerkyScreen extends Screen {
     //? } else {
     public static void renderPerkyTooltip(
             //? if >1.19
-            //GuiGraphics graphics,
+            GuiGraphics graphics,
             //? if <=1.19 {
-            Screen graphics,
+            /*Screen graphics,
             PoseStack stack,
-            //? }
+            *///? }
             PerkyItem item, PPIdentifier id, int perkX, int perkY, int perkEndX, int perkEndY, int mouseX, int mouseY) {
     //? }
         graphics.fill(
                 //? if <=1.19
-                stack,
+                //stack,
                 perkX,perkY,perkEndX,perkEndY, new Color(255,255,255,75).getRGB());
         //? if >1.21.1
-        //graphics.setTooltipForNextFrame(
+        graphics.setTooltipForNextFrame(
         //? if <=1.21.1
-        graphics.renderTooltip(
+        //graphics.renderTooltip(
                 //? if <=1.19
-                stack,
+                //stack,
                 //? if >1.19
-                //Minecraft.getInstance().font,
+                Minecraft.getInstance().font,
                 List.of(
                 Component.translatable("perky." + (item.worth > 0 ? "perk" : "binding") + "." + id.id.getNamespace() + "." + id.id.getPath()).withStyle(ChatFormatting.GREEN).getVisualOrderText(),
                 Component.translatable("perky." + (item.worth > 0 ? "perk" : "binding") + "." + id.id.getNamespace() + "." + id.id.getPath() + ".desc").getVisualOrderText()
         ), mouseX, mouseY);
     }
 
-    //? if >1.19 {
-    /*@Override
+    //? if >1.21.1 {
+    @Override
     public boolean isInGameUi() {
         return true;
     }
-    *///? }
+
+    //? }
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+
 }
