@@ -10,4 +10,6 @@ public class ConsoleBlockEntityRenderState
 {
     public boolean shouldShowFillant = false;
     public Direction direction;
+    public long animationTimestamp = 0;
+    public float tickDelta = 0;
 }

@@ -8,13 +8,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-//? if >1.20.1 {
+//? if >1.20.4 {
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.StreamCodec;
 //? }
 
 public class PPComponentOrNBT<T> {
-    //? if >1.20.1
+    //? if >1.20.4
     public final DataComponentType<T> COMPONENT_FORM;
     public final Codec<T> codec;
     public final String name;
@@ -22,10 +22,10 @@ public class PPComponentOrNBT<T> {
     public PPComponentOrNBT(
             String name,
             Codec<T> persistentCodec
-                            //? if >1.20.1
+                            //? if >1.20.4
                             , StreamCodec<ByteBuf, T> networkCodec
     ) {
-        //? if >1.20.1 {
+        //? if >1.20.4 {
         COMPONENT_FORM = DataComponentType.<T>builder()
                 .networkSynchronized(networkCodec)
                 .persistent(persistentCodec).build();
@@ -35,7 +35,7 @@ public class PPComponentOrNBT<T> {
     }
 
     public void register() {
-        //? if >1.20.1 {
+        //? if >1.20.4 {
         Registry.register(
                 BuiltInRegistries.DATA_COMPONENT_TYPE,
                 PPIdentifier.of(name).id,
@@ -45,7 +45,7 @@ public class PPComponentOrNBT<T> {
     }
 
     public void remove(ItemStack item) {
-        //? if <=1.20.1 {
+        //? if <=1.20.4 {
         /*CompoundTag tag = item.getOrCreateTag();
         tag.remove(name);
         item.setTag(tag);
@@ -54,7 +54,7 @@ public class PPComponentOrNBT<T> {
          //? }
     }
     public void set(ItemStack item, T value) {
-        //? if <=1.20.1 {
+        //? if <=1.20.4 {
         /*CompoundTag tag = item.getOrCreateTag();
         tag.put(name, codec.encodeStart(NbtOps.INSTANCE, value).getOrThrow(false, (a)->{}));
         item.setTag(tag);
@@ -63,7 +63,7 @@ public class PPComponentOrNBT<T> {
         //? }
     }
     public boolean has(ItemStack item) {
-        //? if <=1.20.1 {
+        //? if <=1.20.4 {
         /*CompoundTag tag = item.getOrCreateTag();
         return tag.contains(name);
         *///? } else {
@@ -72,7 +72,7 @@ public class PPComponentOrNBT<T> {
     }
 
     public T get(ItemStack item) {
-        //? if <=1.20.1 {
+        //? if <=1.20.4 {
         /*CompoundTag tag = item.getOrCreateTag();
         return codec.decode(NbtOps.INSTANCE, tag.get(name)).getOrThrow(false, (a)->{}).getFirst();
         *///? } else {

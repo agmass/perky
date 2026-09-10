@@ -7,7 +7,9 @@ import net.minecraft.world.entity.ai.attributes.*;
 import org.agmas.attachment.PerkyItem;
 import org.agmas.bindings.NoArmBinding;
 import org.agmas.perks.FireWaterSwapPerk;
+import org.agmas.perks.NoTargetPerk;
 import org.agmas.perks.PassiveAbsorptionPerk;
+import org.agmas.perks.PotionTimerMultiplierPerkyItem;
 import org.agmas.porting.PPIdentifier;
 import org.w3c.dom.Attr;
 
@@ -18,7 +20,7 @@ public class PerkyItems {
     public static PPIdentifier FLAMMABLE_ID = PPIdentifier.of("flammable");
     public static PPIdentifier MAX_HEALTH_NEGATIVE_ID = PPIdentifier.of("max_health_negative");
     public static PPIdentifier SMOOTH_LANDING_ID = PPIdentifier.of("smooth_landing");
-    public static PPIdentifier FISHERMANS_CHARM_ID = PPIdentifier.of("fishermans_charm");
+    public static PPIdentifier MOB_BOSS_CHARM_ID = PPIdentifier.of("mob_boss");
 
     public static PerkyItem SINGLEHANDED;
 
@@ -38,13 +40,21 @@ public class PerkyItems {
                         new PerkyItem.AttributePair(attribute(Attributes.MAX_HEALTH), modifier(MAX_HEALTH_NEGATIVE_ID, -2, add))
                 )));
         Registry.register(ModRegistries.PERKY_ITEM,
-                PPIdentifier.of("fishermans_charm").id,
-                new PerkyItem(1, List.of(
-                        new PerkyItem.AttributePair(attribute(Attributes.LUCK), modifier(FISHERMANS_CHARM_ID, 2, add))
-                )));
-        Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("lighter").id,
                 new FireWaterSwapPerk());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("mob_boss").id,
+                new NoTargetPerk());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("extent").id,
+                new PotionTimerMultiplierPerkyItem(2, 2));
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("witchs_curse").id,
+                new PotionTimerMultiplierPerkyItem(2, 0.5f));
+
 
         //? if >1.21.1 {
         

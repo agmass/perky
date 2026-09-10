@@ -2,6 +2,8 @@ package org.agmas.block;
 
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.impl.util.log.Log;
+import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,6 +45,16 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
     public ConsoleBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(PART, ConsoleBlockPart.LOWER_LEFT).setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public boolean triggerEvent(BlockState blockState, Level level, BlockPos blockPos, int i, int j) {
+        super.triggerEvent(blockState, level, blockPos, i, j);
+        BlockEntity blockEntity = level.getBlockEntity(findParent(blockPos,blockState,level));
+        if (blockEntity == null) {
+            return false;
+        }
+        return blockEntity.triggerEvent(i, j);
     }
 
     //? if >1.20.1 {
@@ -190,7 +202,7 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
                 return InteractionResult.CONSUME;
             }
 
-            ModAttachments.PERKY_ATTACHMENT.getOrElse(player, new BloodstreamAttachment()).usingConsole = true;
+            ModAttachments.PERKY_ATTACHMENT.getOrElse(player, new BloodstreamAttachment()).usingConsole = pos;
             ServerPlayNetworking.send(((ServerPlayer) player), new OpenPerkyMenuPayload(consoleBlockEntity.attachedBlood));
             consoleBlockEntity.setChanged();
         }

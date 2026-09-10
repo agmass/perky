@@ -3,8 +3,11 @@ package org.agmas.attachment;
 import net.minecraft.core.Holder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -31,8 +34,13 @@ public class PerkyItem {
 
     public CancellableResult canRiptide(Player player) { return CancellableResult.PASS;}
 
+    public boolean canAngerMob(LivingEntity holder, Mob mob) { return true;}
+
     public boolean shouldRenderPart(String partName) {
         return true;
+    }
+    public float getPotionTimeMultiplier(LivingEntity livingEntity, MobEffectInstance effect) {
+        return 1f;
     }
 
     public boolean modifiesVisibleParts() {

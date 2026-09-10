@@ -63,12 +63,12 @@ public class AttachmentMixin implements AttachmentAccessor {
         Entity p = ((Entity) (Object)this);
         //? if <=1.20.4 {
         /*if (ModAttachments.PERKY_ATTACHMENT.has(p) && !p.level
-                //? if =1.20.1
+                //? if >=1.20.1
                         ()
                 .isClientSide()) {
             BloodstreamAttachment playerAttachment = ModAttachments.PERKY_ATTACHMENT.get(p);
             for (Player player : p.level
-                    //? if =1.20.1
+                    //? if >=1.20.1
                             ()
                     .players()) {
                 if (!playerAttachment.networkedTo.contains(player.getUUID())) {

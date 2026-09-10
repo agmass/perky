@@ -46,8 +46,8 @@ public class PerkyScreen extends Screen {
     }
 
     //? if >=26.1 {
-    /*
-    @Override
+    
+    /*@Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float f) {
         super.extractRenderState(guiGraphics, mouseX, mouseY, f);
         int guiGraphicsWidth = guiGraphics.guiWidth();
@@ -243,10 +243,10 @@ public class PerkyScreen extends Screen {
     }
 
     //? if >=26.1 {
-    /*
-    public static void renderPerkyTooltip(GuiGraphicsExtractor graphics, PerkyItem item, PPIdentifier id, int perkX, int perkY, int perkEndX, int perkEndY, int mouseX, int mouseY) {
-     */
-    //? } else {
+    
+    /*public static void renderPerkyTooltip(GuiGraphicsExtractor graphics, PerkyItem item, PPIdentifier id, int perkX, int perkY, int perkEndX, int perkEndY, int mouseX, int mouseY) {
+     
+    *///? } else {
     public static void renderPerkyTooltip(
             //? if >1.19
             GuiGraphics graphics,

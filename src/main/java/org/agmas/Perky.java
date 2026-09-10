@@ -7,13 +7,19 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.impl.attachment.AttachmentTargetImpl;
 //? if >1.21.1
 import net.fabricmc.fabric.impl.attachment.sync.AttachmentChange;
-//? if >1.21.1
+
+//? if >=26.1 {
+/*import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
+*///? } else if >1.21.1 {
 import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
+//? }
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 //? if >=1.21.11 {
 //? } else if >1.21.1 {
 /*import net.fabricmc.fabric.impl.attachment.sync.s2c.AttachmentSyncPayloadS2C;
 *///? }
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
@@ -69,6 +75,8 @@ public class Perky implements ModInitializer {
 
 		//? if >=1.21.1 {
 		ServerPlayNetworking.registerGlobalReceiver(ChangePerksPayload.ID, ((payload, context) -> {
+			BlockPos consolePos = ModAttachments.PERKY_ATTACHMENT.getOrElse(context.player(), new BloodstreamAttachment()).usingConsole;
+			if (consolePos == null) return;
 			BloodstreamAttachment bloodstreamAttachment = ModAttachments.PERKY_ATTACHMENT.getOrElse(context.player(), new BloodstreamAttachment());
 			ArrayList<PerkyItem> toRemove = new ArrayList<>();
 			for (PerkyItem appliedItem : bloodstreamAttachment.appliedItems) {
@@ -84,6 +92,10 @@ public class Perky implements ModInitializer {
 					addAttachment(context.player(), appliedItem);
 				}
 			}
+
+			ServerLevel level = context.player().level();
+			level.blockEvent(consolePos, level.getBlockState(consolePos).getBlock(), 0, 0);
+
 		}));
 		//? } else {
 		/*ServerPlayNetworking.registerGlobalReceiver(ChangePerksPayload.PACKET_TYPE, ((payload, localPlayer, packetSender) -> {
@@ -139,7 +151,10 @@ public class Perky implements ModInitializer {
 			}
 		}));
 
-		//? if >1.21.1 {
+
+		//? if >=26.1 {
+		/*ItemComponentTooltipProviderRegistry.addLast(ModComponents.BLOOD_COMPONENT.COMPONENT_FORM);
+		 *///? } else if >1.21.1 {
 		ComponentTooltipAppenderRegistry.addLast(ModComponents.BLOOD_COMPONENT.COMPONENT_FORM);
 		//? }
 	}
@@ -226,6 +241,7 @@ public class Perky implements ModInitializer {
 	}
 
 	public static List<PerkyItem> getAttachments(LivingEntity livingEntity) {
+		if (livingEntity == null) return List.of();
 		if (ModAttachments.PERKY_ATTACHMENT.has(livingEntity)) {
 			return ModAttachments.PERKY_ATTACHMENT.get(livingEntity).appliedItems;
 		}

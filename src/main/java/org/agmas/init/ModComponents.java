@@ -9,7 +9,7 @@ public class ModComponents {
             new PPComponentOrNBT<>(
                     "blood_component",
                     BloodstreamAttachment.CODEC
-                    //? if >1.20.1
+                    //? if >1.20.4
                     , BloodstreamAttachment.STREAM_CODEC
             );
 

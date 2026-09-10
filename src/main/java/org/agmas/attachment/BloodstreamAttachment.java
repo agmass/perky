@@ -4,7 +4,7 @@ package org.agmas.attachment;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-//? if >1.20.1
+//? if >1.20.4
 import net.fabricmc.loader.impl.util.log.Log;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.handler.codec.DecoderException;
@@ -20,9 +20,11 @@ import net.minecraft.network.Utf8String;
 //? if >1.21.1
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.world.item.Item;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.TooltipFlag;
 import org.agmas.init.ModRegistries;
 import org.agmas.porting.PPIdentifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.nio.charset.StandardCharsets;
@@ -40,7 +42,8 @@ public class BloodstreamAttachment
             Codec.STRING.listOf().fieldOf("applied_items").forGetter(BloodstreamAttachment::getAppliedItemsStrings)
     ).apply(instance, BloodstreamAttachment::new));
 
-    public boolean usingConsole = false;
+    @Nullable
+    public BlockPos usingConsole = null;
     public BloodstreamAttachment(List<String> perkyItemStrings) {
         for (String perkyItemString : perkyItemStrings) {
             //? if >=1.21.11 {
@@ -85,7 +88,7 @@ public class BloodstreamAttachment
         while (byteBuf.isReadable()) {
             if (byteBuf.readByte() == (byte)254) break;
             byteBuf.readerIndex(byteBuf.readerIndex()-1);
-            //? if <=1.20.1 {
+            //? if <=1.20.4 {
             /*String id = readString(byteBuf,32767);
              *///? } else {
             String id = Utf8String.read(byteBuf, 32767);
@@ -102,7 +105,7 @@ public class BloodstreamAttachment
     public void encode(ByteBuf byteBuf, BloodstreamAttachment perkyAttachment) {
         for (PerkyItem item : perkyAttachment.appliedItems) {
             if (PerkyItem.getKey(item) != null) {
-                //? if <=1.20.1 {
+                //? if <=1.20.4 {
                 /*writeString(byteBuf, PerkyItem.getKey(item).id.toString(), 32767);
                 *///? } else {
                 Utf8String.write(byteBuf, PerkyItem.getKey(item).id.toString(), 32767);
@@ -123,7 +126,7 @@ public class BloodstreamAttachment
     }
     //? }
 
-    //? if <=1.20.1 {
+    //? if <=1.20.4 {
 
     /*public static String readString(ByteBuf byteBuf, int i) {
         int j = ByteBufUtil.utf8MaxBytes(i);

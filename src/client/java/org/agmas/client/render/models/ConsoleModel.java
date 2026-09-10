@@ -5,10 +5,13 @@ package org.agmas.client.render.models;
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
-
+//? if <26.1 {
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.EntityModel;
+//? }
+import net.fabricmc.loader.impl.util.log.Log;
+import net.fabricmc.loader.impl.util.log.LogCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -18,8 +21,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 //? if <1.21.4
 //import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.entity.Entity;
-import org.agmas.block.entity.ConsoleBlockEntity;
 import org.agmas.client.render.blockEntity.ConsoleBlockEntityRenderState;
 import org.agmas.porting.PPIdentifier;
 
@@ -38,7 +39,9 @@ public class ConsoleModel extends Model
 	private final ModelPart planes;
 
 	public ConsoleModel(ModelPart root) {
-		//? if >1.21.4 {
+		//? if >=26.1 {
+		/*super(root, RenderTypes::entityTranslucentCullItemTarget);
+		*///? } else if >1.21.4 {
 		super(root, RenderTypes::itemEntityTranslucentCull);
 		//? } else {
 		/*super(RenderType::itemEntityTranslucentCull);
@@ -95,6 +98,16 @@ public class ConsoleModel extends Model
 		//? if >=1.21.4
 		super.setupAnim(console);
 		fillant.visible = console.shouldShowFillant;
+
+		if (Minecraft.getInstance().level != null) {
+			float timeElapsed = Minecraft.getInstance().level.getGameTime()-console.animationTimestamp;
+			timeElapsed += console.tickDelta;
+			if (timeElapsed < 5) {
+				lever.xRot -= 1.0f-(timeElapsed/5f);
+				lever.y += 5;
+				lever.y -= timeElapsed;
+			}
+		}
 
 	}
 

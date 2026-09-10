@@ -31,11 +31,20 @@ public class ConsoleBlockEntity extends BlockEntity {
     public Direction direction;
     public BloodstreamAttachment attachedBlood = new BloodstreamAttachment();
     public boolean hasBottleAttached = false;
+    public long animationTicks = 0;
 
     public ConsoleBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModEntities.CONSOLE_BLOCK_ENTITY, blockPos, blockState);
         direction = blockState.getValue(HorizontalDirectionalBlock.FACING);
         shouldRenderModel = blockState.getValue(ConsoleBlock.PART) == ConsoleBlock.ConsoleBlockPart.LOWER_LEFT;
+    }
+
+
+
+    @Override
+    public boolean triggerEvent(int b0, int b1) {
+        animationTicks = (int) level.getGameTime();
+        return true;
     }
 
     //? if >1.21.1 {
@@ -62,11 +71,11 @@ public class ConsoleBlockEntity extends BlockEntity {
 
     /*@Override
     protected void saveAdditional(CompoundTag compoundTag
-                                //? if >=1.20.4
+                                //? if >=1.21.1
                                   ,  HolderLookup.Provider provider
     ) {
         super.saveAdditional(compoundTag
-                //? if >=1.20.4
+                //? if >=1.21.1
                 , provider
         );
         compoundTag.putBoolean("hasBottleAttached", hasBottleAttached);
@@ -78,20 +87,11 @@ public class ConsoleBlockEntity extends BlockEntity {
         );
     }
 
-    @Override
-    public void setChanged() {
-        super.setChanged();
-
-        if (level == null) return;
-
-        BlockState state = getBlockState();
-        level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_ALL);
-    }
 
     @Override
-    //? if >=1.20.4
+    //? if >=1.21.1
     public void loadAdditional
-    //? if <1.20.4
+    //? if <1.21.1
     //public void load
             (CompoundTag compoundTag
                      //? if >=1.21.1
@@ -122,7 +122,7 @@ public class ConsoleBlockEntity extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
     *///? }
-    //? if <=1.20.4 {
+    //? if <1.21.1 {
     /*@Override
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
@@ -134,4 +134,15 @@ public class ConsoleBlockEntity extends BlockEntity {
         return saveWithoutMetadata(provider);
     }
     //? }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+
+        if (level == null) return;
+
+        BlockState state = getBlockState();
+        level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_ALL);
+    }
+
 }

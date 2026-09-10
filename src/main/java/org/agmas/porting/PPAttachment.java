@@ -6,8 +6,8 @@ import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 //? }
-//? if >1.20.1
-//import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
+//? if >1.20.4
+import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import org.agmas.accessors.AttachmentAccessor;

@@ -37,7 +37,10 @@ public class PerkyClient implements ClientModInitializer {
 			Minecraft.getInstance().setScreen(new PerkyScreen(openPerkyMenuPayload.options(), Component.literal("ohio")));
 		}));
 		ClientPlayNetworking.registerGlobalReceiver(OldVersionPerkyNetworkingPayload.PACKET_TYPE, ((payload, localPlayer, packetSender) -> {
-			ModAttachments.PERKY_ATTACHMENT.set(localPlayer.level.getEntity(payload.id()), payload.playerAttachment());
+			ModAttachments.PERKY_ATTACHMENT.set(localPlayer.level
+				//? if >=1.20.1
+					()
+			.getEntity(payload.id()), payload.playerAttachment());
 		}));
 		*///? }
 
