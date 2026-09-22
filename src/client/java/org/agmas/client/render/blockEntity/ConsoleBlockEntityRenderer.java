@@ -3,7 +3,7 @@ package org.agmas.client.render.blockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 //? if <26.1
-import net.minecraft.client.renderer.MultiBufferSource;
+//import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 //? if >1.21.4
@@ -18,9 +18,9 @@ import org.agmas.client.render.models.ConsoleModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 //? if <26.1
-import net.minecraft.client.renderer.state.CameraRenderState;
+//import net.minecraft.client.renderer.state.CameraRenderState;
 //? if >=26.1
-//import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import org.jspecify.annotations.Nullable;
 //? } else {
 /*import net.minecraft.client.renderer.RenderType;
@@ -87,14 +87,14 @@ public class ConsoleBlockEntityRenderer implements BlockEntityRenderer<ConsoleBl
         }
 
         //? if <26.1 {
-        submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack,
+        /*submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack,
                 RenderTypes.itemEntityTranslucentCull(ConsoleModel.textureLocation.id),
                 blockEntityRenderState.lightCoords, OverlayTexture.NO_OVERLAY,0, null);
-        //? } else {
-        /*submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack,
+        *///? } else {
+        submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack,
                 RenderTypes.entityTranslucentCullItemTarget(ConsoleModel.textureLocation.id),
                 blockEntityRenderState.lightCoords, OverlayTexture.NO_OVERLAY,0, (ModelFeatureRenderer.CrumblingOverlay) null);
-        *///? }
+        //? }
     }
     //? } else {
     /*public void render(ConsoleBlockEntity blockEntity, float f, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j) {

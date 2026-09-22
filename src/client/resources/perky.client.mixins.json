@@ -3,6 +3,7 @@
   "package": "org.agmas.client.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "AddToInventoryScreenMixin",
     "newRenderingEngineMixins.AddRenderStateMixin",
     "newRenderingEngineMixins.AvatarModelMixin",
     "oldRenderingEngineMixins.HumanoidModelMixin"

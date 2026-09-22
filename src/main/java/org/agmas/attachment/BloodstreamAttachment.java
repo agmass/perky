@@ -71,6 +71,14 @@ public class BloodstreamAttachment
     };
     //?}
 
+    public int getWorth() {
+        int i = 0;
+        for (PerkyItem appliedItem : appliedItems) {
+            if (appliedItem == null) continue;
+            i += appliedItem.worth;
+        }
+        return i;
+    }
 
     public ArrayList<String> getAppliedItemsStrings() {
         ArrayList<String> stringarr = new ArrayList<>();

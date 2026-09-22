@@ -2,12 +2,12 @@ package org.agmas.client.datagen;
 
 //? if >=1.18 {
 //? if >=26.1 {
-/*import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
- *///? } else if >1.18 {
-import com.google.gson.JsonArray;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+ //? } else if >1.18 {
+/*import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-//? } else {
+*///? } else {
 /*import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
  *///? }
 //? if >=1.21.4 {
@@ -36,14 +36,14 @@ import java.util.concurrent.CompletableFuture;
 public class PerkyModelDatagen extends FabricModelProvider {
 
     //? if >=26.1 {
-    /*public PerkyModelDatagen(FabricPackOutput output) {
+    public PerkyModelDatagen(FabricPackOutput output) {
         super(output);
     }
-    *///? } else if >1.18 {
-    public PerkyModelDatagen(FabricDataOutput output) {
+    //? } else if >1.18 {
+    /*public PerkyModelDatagen(FabricDataOutput output) {
         super(output);
     }
-    //? } else {
+    *///? } else {
     /*public PerkyModelDatagen(FabricDataGenerator output) {
         super(output);
     }
@@ -56,7 +56,7 @@ public class PerkyModelDatagen extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
         bloodFilledItem(itemModelGenerator, ModItems.SYRINGE, ModelTemplates.FLAT_ITEM);
-
+        itemModelGenerator.generateFlatItem(ModBlocks.CONSOLE.asItem(), ModelTemplates.FLAT_ITEM);
     }
     public void bloodFilledItem(ItemModelGenerators itemModelGenerator, Item item, ModelTemplate template) {
 

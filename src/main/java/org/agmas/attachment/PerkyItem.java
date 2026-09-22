@@ -1,7 +1,9 @@
 package org.agmas.attachment;
 
 import net.minecraft.core.Holder;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -10,9 +12,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.agmas.accessors.PlayerAccessor;
 import org.agmas.init.ModRegistries;
+import org.agmas.init.PerkyItems;
 import org.agmas.porting.PPIdentifier;
 
 import java.util.ArrayList;
@@ -25,6 +31,7 @@ public class PerkyItem {
 
     public PerkyItem(int worth) {
         this.worth = worth;
+        attributes = new ArrayList<>();
     }
 
     public PerkyItem(int worth, List<AttributePair> permanentAttributes) {
@@ -73,6 +80,21 @@ public class PerkyItem {
         }
     }
 
+    public Item overrideFoodData(ItemStack stack, LivingEntity player) {
+        return null;
+    }
+    public InteractionResult overrideItemUse(ItemStack stack, Player player, InteractionHand hand) {
+        return InteractionResult.PASS;
+    }
+
+    public TagKey<PerkyItem> exclusive() {
+        return null;
+    }
+
+    public int modifyStackSize(ItemStack stack, LivingEntity livingEntity, int size) {
+        return -1;
+    }
+
     public float modifyDamage(LivingEntity victim, DamageSource source, float v) {
         return -1;
     }
@@ -90,6 +112,7 @@ public class PerkyItem {
             this.modifier = modifier;
         }
     }
+
 
     public enum CancellableResult {
         CANCEL,

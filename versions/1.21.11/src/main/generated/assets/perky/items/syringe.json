@@ -4,11 +4,11 @@
     "component": "perky:blood_component",
     "on_false": {
       "type": "minecraft:model",
-      "model": "perky:item/syringe_filled"
+      "model": "perky:item/syringe"
     },
     "on_true": {
       "type": "minecraft:model",
-      "model": "perky:item/syringe"
+      "model": "perky:item/syringe_filled"
     },
     "property": "minecraft:has_component"
   }

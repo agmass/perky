@@ -1,10 +1,10 @@
 package org.agmas.client.datagen;
 
 //? if >=26.1 {
-/*import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
- *///? } else {
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-//? }
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+ //? } else {
+/*import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+*///? }
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
@@ -18,14 +18,14 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
 
 
     //? if >=26.1 {
-    /*public PerkyLangDatagen(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public PerkyLangDatagen(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
-     *///? } else if >=1.21.1 {
-    public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+     //? } else if >=1.21.1 {
+    /*public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
-    //? } else {
+    *///? } else {
     /*public PerkyLangDatagen(FabricDataOutput dataOutput) {
         super(dataOutput);
     }
@@ -54,17 +54,51 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         translationBuilder.add("perky.perk.perky.fishermans_charm.desc", "Increases Luck");
 
         translationBuilder.add("perky.perk.perky.passive_absorption", "Passive Absorption");
-        translationBuilder.add("perky.perk.perky.passive_absorption.desc", "When out of combat for 30+ seconds, gain 4 hearts of Absorption");
+        translationBuilder.add("perky.perk.perky.passive_absorption.desc", "When out of combat for 30+ seconds,\ngain 4 hearts of Absorption");
 
         translationBuilder.add("perky.perk.perky.smooth_landing", "Smooth Landing");
-        translationBuilder.add("perky.perk.perky.smooth_landing.desc", "Increase safe fall distance by 2 blocks");
+        translationBuilder.add("perky.perk.perky.smooth_landing.desc", "Increase safe fall distance by 5 blocks");
 
-        translationBuilder.add("perky.perk.perky.flammable", "Flammable");
-        translationBuilder.add("perky.perk.perky.flammable.desc", "Increase time set on fire by 100%");
+        translationBuilder.add("perky.perk.perky.builders_pockets", "Builder's Pockets");
+        translationBuilder.add("perky.perk.perky.builders_pockets.desc", "Blocks can now stack up to 99.");
 
-        translationBuilder.add("perky.perk.perky.singlehanded", "Singlehanded");
-        translationBuilder.add("perky.perk.perky.singlehanded.desc", "Removes your off-hand, rendering it unusable.");
+        translationBuilder.add("perky.binding.perky.stackless", "Stackless");
+        translationBuilder.add("perky.binding.perky.stackless.desc", "Non-block items can only stack up to half of their usual stack size.");
+
+        translationBuilder.add("perky.perk.perky.mob_boss", "Mob Boss");
+        translationBuilder.add("perky.perk.perky.mob_boss.desc", "Hostile mobs no longer target you when unprovoked.");
+
+        translationBuilder.add("perky.perk.perky.lighter", "Lighter");
+        translationBuilder.add("perky.perk.perky.lighter.desc", "Makes fire deal no damage and allows the use of Riptide tridents on fire.");
+
+        translationBuilder.add("perky.perk.perky.extent", "Extent");
+        translationBuilder.add("perky.perk.perky.extent.desc", "Makes potions last longer.");
+
+        translationBuilder.add("perky.binding.perky.flammable", "Flammable");
+        translationBuilder.add("perky.binding.perky.flammable.desc", "Increase time set on fire by 100%");
+
+        translationBuilder.add("perky.binding.perky.dexterity", "Dexterity");
+        translationBuilder.add("perky.binding.perky.dexterity.desc", "Blocks can be reached from 2 blocks further than usual.");
+
+        translationBuilder.add("perky.perk.perky.sponge", "Sponge");
+        //? if >=1.21.1
+        translationBuilder.add("perky.perk.perky.sponge.desc", "Hunger and Saturation are refilled when in water; but increases size.");
+        //? if <1.21.1
+        //translationBuilder.add("perky.perk.perky.sponge.desc", "Hunger is slowly refilled when in water.");
+
+
+        translationBuilder.add("perky.perk.perky.cure", "Cure");
+        translationBuilder.add("perky.perk.perky.cure.desc", "Vanilla Debuff effects are significantly shortened.");
+
+        translationBuilder.add("perky.binding.perky.singlehanded", "Singlehanded");
+        translationBuilder.add("perky.binding.perky.singlehanded.desc", "Removes your off-hand, rendering it unusable.");
+
+        translationBuilder.add("perky.binding.perky.witchs_curse", "Witch's Curse");
+        translationBuilder.add("perky.binding.perky.witchs_curse.desc", "Potions last a shorter amount of time.");
+
         translationBuilder.add("perky.bloodstream", "Bloodstream");
+        translationBuilder.add("perky.worth", "Worth %s %ss.");
+        translationBuilder.add("perky.not_enough_worth", "%s binding points required.");
     }
 
 }

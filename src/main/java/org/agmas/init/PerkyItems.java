@@ -5,11 +5,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.attributes.*;
 import org.agmas.attachment.PerkyItem;
+import org.agmas.bindings.CannibalBinding;
+import org.agmas.bindings.HalfStackSizeBinding;
 import org.agmas.bindings.NoArmBinding;
-import org.agmas.perks.FireWaterSwapPerk;
-import org.agmas.perks.NoTargetPerk;
-import org.agmas.perks.PassiveAbsorptionPerk;
-import org.agmas.perks.PotionTimerMultiplierPerkyItem;
+import org.agmas.bindings.RottenifierBinding;
+import org.agmas.perks.*;
 import org.agmas.porting.PPIdentifier;
 import org.w3c.dom.Attr;
 
@@ -17,12 +17,13 @@ import java.util.List;
 
 public class PerkyItems {
 
+    public static PPIdentifier DEXTERITY_ID = PPIdentifier.of("dexterity");
     public static PPIdentifier FLAMMABLE_ID = PPIdentifier.of("flammable");
-    public static PPIdentifier MAX_HEALTH_NEGATIVE_ID = PPIdentifier.of("max_health_negative");
     public static PPIdentifier SMOOTH_LANDING_ID = PPIdentifier.of("smooth_landing");
-    public static PPIdentifier MOB_BOSS_CHARM_ID = PPIdentifier.of("mob_boss");
 
     public static PerkyItem SINGLEHANDED;
+    public static PerkyItem FLAMMABLE;
+
 
     public static void init() {
 
@@ -34,11 +35,6 @@ public class PerkyItems {
 
         SINGLEHANDED = Registry.register(ModRegistries.PERKY_ITEM, PPIdentifier.of("singlehanded").id, new NoArmBinding());
         Registry.register(ModRegistries.PERKY_ITEM, PPIdentifier.of("passive_absorption").id, new PassiveAbsorptionPerk());
-        Registry.register(ModRegistries.PERKY_ITEM,
-                PPIdentifier.of("max_health_negative").id,
-                new PerkyItem(-2, List.of(
-                        new PerkyItem.AttributePair(attribute(Attributes.MAX_HEALTH), modifier(MAX_HEALTH_NEGATIVE_ID, -2, add))
-                )));
         Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("lighter").id,
                 new FireWaterSwapPerk());
@@ -53,12 +49,46 @@ public class PerkyItems {
 
         Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("witchs_curse").id,
-                new PotionTimerMultiplierPerkyItem(2, 0.5f));
+                new PotionTimerMultiplierPerkyItem(-2, 0.5f));
 
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("stackless").id,
+                new HalfStackSizeBinding());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("cure").id,
+                new ShorterVanillaNegativeEffectsPerk(1));
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("sponge").id,
+                new SpongePerk());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("cannibal").id,
+                new CannibalBinding());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("midas_touch").id,
+                new MidasTouchPerk());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("picky_eater").id,
+                new RottenifierBinding());
 
         //? if >1.21.1 {
         
+            
+
             Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("builders_pockets").id,
+                new MoreBuildingStackPerk());
+
+            Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("dexterity").id,
+                new PerkyItem(1, List.of(
+                        new PerkyItem.AttributePair(Attributes.BLOCK_INTERACTION_RANGE, new AttributeModifier(DEXTERITY_ID.id, 2, add))
+                )));
+            FLAMMABLE = Registry.register(ModRegistries.PERKY_ITEM,
                     PPIdentifier.of("flammable").id,
                     new PerkyItem(-1, List.of(
                             new PerkyItem.AttributePair(Attributes.BURNING_TIME, new AttributeModifier(FLAMMABLE_ID.id, 1, add))
@@ -66,7 +96,7 @@ public class PerkyItems {
             Registry.register(ModRegistries.PERKY_ITEM,
                     PPIdentifier.of("smooth_landing").id,
                     new PerkyItem(1, List.of(
-                            new PerkyItem.AttributePair(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(SMOOTH_LANDING_ID.id, 1, add))
+                            new PerkyItem.AttributePair(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(SMOOTH_LANDING_ID.id, 5, add))
                     )));
          //? }
     }

@@ -20,10 +20,4 @@ public class PotionTimerMultiplierPerkyItem extends PerkyItem {
     public float getPotionTimeMultiplier(LivingEntity livingEntity, MobEffectInstance effect) {
         return potionTimeMultiplier;
     }
-
-    @Override
-    public boolean canAngerMob(LivingEntity holder, Mob mob) {
-        if (mob.getLastAttacker() != holder) return false;
-        return super.canAngerMob(holder, mob);
-    }
 }

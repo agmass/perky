@@ -9,10 +9,10 @@ import net.fabricmc.fabric.impl.attachment.AttachmentTargetImpl;
 import net.fabricmc.fabric.impl.attachment.sync.AttachmentChange;
 
 //? if >=26.1 {
-/*import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
-*///? } else if >1.21.1 {
-import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
-//? }
+import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
+//? } else if >1.21.1 {
+/*import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
+*///? }
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 //? if >=1.21.11 {
@@ -51,25 +51,26 @@ public class Perky implements ModInitializer {
 		PerkyItems.init();
 		ModItems.init();
 		ModComponents.init();
+		ModTags.init();
 		ModArgumentTypes.init();
 
 		PerkyCommands.init();
 
 
 		//? if >=26.1 {
-		/*PayloadTypeRegistry.clientboundPlay()
-		 *///? } else if >=1.21.1 {
-		PayloadTypeRegistry.playS2C()
-				//? }
+		PayloadTypeRegistry.clientboundPlay()
+		 //? } else if >=1.21.1 {
+		/*PayloadTypeRegistry.playS2C()
+				*///? }
 				//? if >1.20.4
 				.register(OpenPerkyMenuPayload.ID, OpenPerkyMenuPayload.CODEC);
 
 
 		//? if >=26.1 {
-		/*PayloadTypeRegistry.serverboundPlay()
-		 *///? } else if >=1.21.1 {
-		PayloadTypeRegistry.playC2S()
-				//? }
+		PayloadTypeRegistry.serverboundPlay()
+		 //? } else if >=1.21.1 {
+		/*PayloadTypeRegistry.playC2S()
+				*///? }
 				//? if >1.20.4
 				.register(ChangePerksPayload.ID, ChangePerksPayload.CODEC);
 
@@ -93,7 +94,7 @@ public class Perky implements ModInitializer {
 				}
 			}
 
-			ServerLevel level = context.player().level();
+			ServerLevel level = (ServerLevel) context.player().level();
 			level.blockEvent(consolePos, level.getBlockState(consolePos).getBlock(), 0, 0);
 
 		}));
@@ -153,10 +154,10 @@ public class Perky implements ModInitializer {
 
 
 		//? if >=26.1 {
-		/*ItemComponentTooltipProviderRegistry.addLast(ModComponents.BLOOD_COMPONENT.COMPONENT_FORM);
-		 *///? } else if >1.21.1 {
-		ComponentTooltipAppenderRegistry.addLast(ModComponents.BLOOD_COMPONENT.COMPONENT_FORM);
-		//? }
+		ItemComponentTooltipProviderRegistry.addLast(ModComponents.BLOOD_COMPONENT.COMPONENT_FORM);
+		 //? } else if >1.21.1 {
+		/*ComponentTooltipAppenderRegistry.addLast(ModComponents.BLOOD_COMPONENT.COMPONENT_FORM);
+		*///? }
 	}
 
 	public static BloodstreamAttachment getBloodstreamFromMob(LivingEntity livingEntity) {
@@ -203,10 +204,10 @@ public class Perky implements ModInitializer {
 			//? if >=26.2 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, new AttachmentChange(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment));
 			*///? } else if =26.1 {
-			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getRegistryAccess()));
-			 *///? } else if =1.21.11 {
-			attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()));
-			 //? } else if >1.21.1 {
+			attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getRegistryAccess()));
+			 //? } else if =1.21.11 {
+			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()));
+			 *///? } else if >1.21.1 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, new AttachmentSyncPayloadS2C(List.of(AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()))));
 			 *///? }
 			playerAttachment.networkedTo.clear();
@@ -229,10 +230,10 @@ public class Perky implements ModInitializer {
 			//? if >=26.2 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, new AttachmentChange(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment));
 			*///? } else if =26.1 {
-			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getRegistryAccess()));
-			*///? } else if =1.21.11 {
-			attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()));
-			 //? } else if >1.21.1 {
+			attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getRegistryAccess()));
+			//? } else if =1.21.11 {
+			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()));
+			 *///? } else if >1.21.1 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, new AttachmentSyncPayloadS2C(List.of(AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getDynamicRegistryManager()))));
 			 *///? }
 			playerAttachment.networkedTo.clear();

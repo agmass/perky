@@ -25,7 +25,12 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(InventoryMenu.class)
 public class CannotOffhandInventoryMixin {
-	@WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/InventoryMenu;addSlot(Lnet/minecraft/world/inventory/Slot;)Lnet/minecraft/world/inventory/Slot;", ordinal = 1))
+	@WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/InventoryMenu;addSlot(Lnet/minecraft/world/inventory/Slot;)Lnet/minecraft/world/inventory/Slot;",
+			//? if <1.20.1
+			//ordinal = 5
+			//? if >=1.20.1
+			ordinal = 1
+	))
 	public Slot noOffhandSlot(InventoryMenu instance, Slot slot, Operation<Slot> original, @Local(argsOnly = true) Player player, @Local(argsOnly = true)Inventory inventory) {
 		return original.call(instance, new Slot(inventory, 40,slot.x, slot.y) {
 
