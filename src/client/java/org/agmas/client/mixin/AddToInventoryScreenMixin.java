@@ -5,10 +5,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 //? if <=1.19 {
 //? } else if <26.1 {
-/*import net.minecraft.client.gui.GuiGraphics;
-*///? } else {
-import net.minecraft.client.gui.GuiGraphicsExtractor;
- //? }
+import net.minecraft.client.gui.GuiGraphics;
+//? } else {
+/*import net.minecraft.client.gui.GuiGraphicsExtractor;
+ *///? }
 import net.minecraft.client.gui.screens.Screen;
 //? if >=1.21.11
 import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
@@ -38,12 +38,12 @@ public class AddToInventoryScreenMixin {
     /*@Inject(method = "render", at = @At("TAIL"))
     public void renderPerks(PoseStack guiGraphics, int j, int f, float a, CallbackInfo ci) {
     *///? } else if <26.1 {
-    /*@Inject(method = "render", at = @At("TAIL"))
+    @Inject(method = "render", at = @At("TAIL"))
     public void renderPerks(GuiGraphics guiGraphics, int j, int f, float a, CallbackInfo ci) {
-    *///? } else {
-    @Inject(method = "extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V", at = @At("TAIL"))
+    //? } else {
+    /*@Inject(method = "extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V", at = @At("TAIL"))
     public void renderPerks(GuiGraphicsExtractor guiGraphics, int j, int f, float a, CallbackInfo ci) {
-    //? }
+    *///? }
         int ie = 0;
         int totalWidth = 0;
         for (PerkyItem attachment : Perky.getAttachments(Minecraft.getInstance().player)) {

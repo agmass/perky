@@ -202,7 +202,10 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
                 return InteractionResult.CONSUME;
             }
 
-            ModAttachments.PERKY_ATTACHMENT.getOrElse(player, new BloodstreamAttachment()).usingConsole = pos;
+            if (!ModAttachments.PERKY_ATTACHMENT.has(player)) {
+                ModAttachments.PERKY_ATTACHMENT.set(player, new BloodstreamAttachment());
+            }
+            ModAttachments.PERKY_ATTACHMENT.get(player).usingConsole = pos;
             ServerPlayNetworking.send(((ServerPlayer) player), new OpenPerkyMenuPayload(consoleBlockEntity.attachedBlood));
             consoleBlockEntity.setChanged();
         }

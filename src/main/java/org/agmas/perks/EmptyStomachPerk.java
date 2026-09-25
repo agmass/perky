@@ -1,6 +1,6 @@
 package org.agmas.perks;
 
-//? if >=1.21.11
+//? if >=1.21.1
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,23 +15,12 @@ public class EmptyStomachPerk extends PerkyItem {
     public EmptyStomachPerk() {
         super(1);
     }
-
-    @Override
-    public Item overrideFoodData(ItemStack stack, LivingEntity player) {
-        if (stack.is(Items.APPLE)) {
-            return Items.GOLDEN_APPLE;
-        } else if (stack.is(Items.CARROT)) {
-            return Items.GOLDEN_CARROT;
-        }
-        return super.overrideFoodData(stack, player);
-    }
-
     @Override
     public InteractionResult overrideItemUse(ItemStack stack, Player player, InteractionHand hand) {
         if (
-            //? if <1.21.11
-            //stack.getFoodComponent() != null
-            //? if >=1.21.11
+            //? if <1.21.1
+            //stack.getItem().getFoodProperties() != null
+            //? if >=1.21.1
             stack.getComponents().has(DataComponents.FOOD)
         ) {
             player.startUsingItem(hand);

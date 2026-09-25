@@ -59,7 +59,11 @@ public class PerkyTickMixin implements PlayerAccessor {
 				rightLegDisabled = !attachment.shouldRenderPart("rightLeg");
 			}
 
-			attachment.tick(p);
+			if (!p.level
+					//? if >1.19
+					()
+					.isClientSide())
+				attachment.tick(p);
 		}
 	}
 

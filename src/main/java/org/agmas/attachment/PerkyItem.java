@@ -16,6 +16,8 @@ import net.minecraft.world.food.FoodData;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.agmas.accessors.PlayerAccessor;
 import org.agmas.init.ModRegistries;
 import org.agmas.init.PerkyItems;
@@ -28,6 +30,7 @@ public class PerkyItem {
 
     public int worth;
     public List<AttributePair> attributes;
+    public boolean staticModifiers = true;
 
     public PerkyItem(int worth) {
         this.worth = worth;
@@ -37,6 +40,10 @@ public class PerkyItem {
     public PerkyItem(int worth, List<AttributePair> permanentAttributes) {
         this(worth);
         attributes = permanentAttributes;
+    }
+
+    public int bonusRolls(LootContext params, int originalRolls) {
+        return 0;
     }
 
     public CancellableResult canRiptide(Player player) { return CancellableResult.PASS;}
@@ -66,7 +73,7 @@ public class PerkyItem {
                 //? if >=1.21.1 {
                 Holder<Attribute> attr = attribute.holder;
                 //? } else {
-                /*Attribute attr = attribute.holder.value();
+                /*Attribute attr = attribute.holder;
                 *///? }
 
                 //? if >=1.21.1 {
@@ -75,6 +82,15 @@ public class PerkyItem {
                 /*if (!livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
                 *///? }
                     livingEntity.getAttribute(attr).addPermanentModifier(attribute.modifier);
+                } else if (!staticModifiers) {
+                    //? if >=1.21.1 {
+                    livingEntity.getAttribute(attr).addOrReplacePermanentModifier(attribute.modifier);
+                    //? } else {
+                    /*if (livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
+                        livingEntity.getAttribute(attr).removePermanentModifier(attribute.modifier.getId());
+                        livingEntity.getAttribute(attr).addPermanentModifier(attribute.modifier);
+                    }
+                    *///? }
                 }
             }
         }
@@ -104,10 +120,16 @@ public class PerkyItem {
     }
 
     public static class AttributePair {
+        //? if >1.20.4
         public Holder<Attribute> holder;
+        //? if <=1.20.4
+        //public Attribute holder;
         public AttributeModifier modifier;
 
+        //? if >1.20.4
         public AttributePair(Holder<Attribute> holder, AttributeModifier modifier) {
+        //? if <=1.20.4
+        //public AttributePair(Attribute holder, AttributeModifier modifier) {
             this.holder = holder;
             this.modifier = modifier;
         }

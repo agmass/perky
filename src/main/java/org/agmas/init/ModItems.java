@@ -1,11 +1,11 @@
 package org.agmas.init;
 
 //? if >=26.1 {
-import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
- //? } else if >1.18 {
+/*import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+ *///? } else if >1.18 {
 
-/*import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
- *///? }
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+ //? }
 import net.minecraft.core.Registry;
 //? if >1.18 {
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -58,20 +58,20 @@ public class ModItems {
     public static void init() {
 
         //? if >=26.1 {
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
-        //? } else {
-        /*ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
-         *///? }
+        /*CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+        *///? } else {
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+         //? }
         .register((creativeTab) -> {
             creativeTab.accept(BLOOD_BOTTLE);
             creativeTab.accept(SYRINGE);
         });
 
         //? if >=26.1 {
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS)
-         //? } else {
-        /*ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS)
-                *///? }
+        /*CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS)
+         *///? } else {
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS)
+                //? }
                 .register((creativeTab) -> {
                     creativeTab.accept(BLOOD_BOTTLE);
                 });

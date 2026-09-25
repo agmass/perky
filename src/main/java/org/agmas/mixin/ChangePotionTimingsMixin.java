@@ -2,6 +2,8 @@ package org.agmas.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import net.fabricmc.loader.impl.util.log.Log;
+import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +21,8 @@ public class ChangePotionTimingsMixin {
         for (PerkyItem attachment : Perky.getAttachments((LivingEntity) (Object)this)) {
             durationScale *= attachment.getPotionTimeMultiplier((LivingEntity) (Object)this, mobEffectInstance);
         }
-        if (durationScale == 1) {
+        Log.info(LogCategory.GENERAL, durationScale+"");
+        if (durationScale == 1 || mobEffectInstance.getDuration() == -1) {
             return original.call(mobEffectInstance, entity);
         } else {
             return original.call(new MobEffectInstance(mobEffectInstance.getEffect(), (int) (mobEffectInstance.getDuration()*durationScale), mobEffectInstance.getAmplifier(),mobEffectInstance.isAmbient(),mobEffectInstance.isVisible()), entity);

@@ -1,10 +1,10 @@
 package org.agmas.client.datagen;
 
 //? if >=26.1 {
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
- //? } else {
-/*import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-*///? }
+/*import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+ *///? } else {
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+//? }
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
@@ -18,14 +18,14 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
 
 
     //? if >=26.1 {
-    public PerkyLangDatagen(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    /*public PerkyLangDatagen(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
-     //? } else if >=1.21.1 {
-    /*public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+     *///? } else if >=1.21.1 {
+    public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
-    *///? } else {
+    //? } else {
     /*public PerkyLangDatagen(FabricDataOutput dataOutput) {
         super(dataOutput);
     }
@@ -77,12 +77,9 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         translationBuilder.add("perky.binding.perky.flammable", "Flammable");
         translationBuilder.add("perky.binding.perky.flammable.desc", "Increase time set on fire by 100%");
 
-        translationBuilder.add("perky.binding.perky.dexterity", "Dexterity");
-        translationBuilder.add("perky.binding.perky.dexterity.desc", "Blocks can be reached from 2 blocks further than usual.");
-
         translationBuilder.add("perky.perk.perky.sponge", "Sponge");
         //? if >=1.21.1
-        translationBuilder.add("perky.perk.perky.sponge.desc", "Hunger and Saturation are refilled when in water; but increases size.");
+        translationBuilder.add("perky.perk.perky.sponge.desc", "Hunger and Saturation are refilled when in water; but size increases.");
         //? if <1.21.1
         //translationBuilder.add("perky.perk.perky.sponge.desc", "Hunger is slowly refilled when in water.");
 
@@ -95,6 +92,29 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
 
         translationBuilder.add("perky.binding.perky.witchs_curse", "Witch's Curse");
         translationBuilder.add("perky.binding.perky.witchs_curse.desc", "Potions last a shorter amount of time.");
+
+        translationBuilder.add("perky.perk.perky.empty_stomach", "Empty Stomach");
+        translationBuilder.add("perky.perk.perky.empty_stomach.desc", "Food is always edible.");
+
+        translationBuilder.add("perky.perk.perky.slimey", "Slimey");
+        //? if >=1.21.1
+        translationBuilder.add("perky.perk.perky.slimey.desc", "Become smaller and faster when less items are in your inventory.");
+        //? if <1.21.1
+        //translationBuilder.add("perky.perk.perky.slimey.desc", "Become faster when less items are in your inventory.");
+
+        translationBuilder.add("perky.perk.perky.dexterity", "Dexterity");
+        translationBuilder.add("perky.perk.perky.dexterity.desc", "You can reach blocks from further.");
+
+        translationBuilder.add("perky.perk.perky.grime_filled", "Grime-filled");
+        translationBuilder.add("perky.perk.perky.grime_filled.desc", "Mobs and Loot Chests have more loot.");
+
+        translationBuilder.add("perky.perk.perky.midas_touch", "Midas Touch");
+        translationBuilder.add("perky.perk.perky.midas_touch.desc", "Apples and Carrots act like their Golden counterpart.");
+
+        translationBuilder.add("perky.binding.perky.midas_touch", "Nyctophobia");
+        translationBuilder.add("perky.binding.perky.midas_touch.desc", "Take damage when in the dark.");
+
+        translationBuilder.add("death.attack.nyctophobia", "%s stared into the shadows");
 
         translationBuilder.add("perky.bloodstream", "Bloodstream");
         translationBuilder.add("perky.worth", "Worth %s %ss.");

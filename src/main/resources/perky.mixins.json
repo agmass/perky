@@ -3,7 +3,9 @@
   "package": "org.agmas.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AutoChangeStackSizeMixin",
     "BloodstreamOldVersionMixin",
+    "BonusRollsMixin",
     "CannotOffhandInventoryMixin",
     "CannotOffhandMixin",
     "ChanceToSpawnSinglehandedMixin",

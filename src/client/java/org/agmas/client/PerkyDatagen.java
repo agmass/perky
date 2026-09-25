@@ -13,5 +13,6 @@ public class PerkyDatagen implements DataGeneratorEntrypoint {
 		pack.addProvider(PerkyModelDatagen::new);
 		pack.addProvider(PerkyTagDatagen.PerkyItemTags::new);
 		pack.addProvider(PerkyTagDatagen.ItemTags::new);
+		pack.addProvider(PerkyTagDatagen.PerkyDamageTypeTags::new);
 	}
 }

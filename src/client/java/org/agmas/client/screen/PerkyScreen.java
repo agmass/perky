@@ -9,10 +9,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 //? if >1.19 {
 //? if <=1.21.11
-//import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphics;
 //? }
 //? if >=26.1
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+//import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 //? if >1.21.1
 import net.minecraft.client.input.MouseButtonEvent;
@@ -54,18 +54,18 @@ public class PerkyScreen extends Screen {
 
     //? if >=26.1 {
     
-    @Override
+    /*@Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float f) {
         super.extractRenderState(guiGraphics, mouseX, mouseY, f);
         int guiGraphicsWidth = guiGraphics.guiWidth();
         int guiGraphicsHeight = guiGraphics.guiHeight();
-    //? } else if >1.19 {
-    /*@Override
+    *///? } else if >1.19 {
+    @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float f) {
         super.render(guiGraphics, mouseX, mouseY, f);
         int guiGraphicsWidth = guiGraphics.guiWidth();
         int guiGraphicsHeight = guiGraphics.guiHeight();
-    *///? } else {
+    //? } else {
 
     /*@Override
     public void render(PoseStack guiGraphics, int mouseX, int mouseY, float f) {
@@ -229,10 +229,10 @@ public class PerkyScreen extends Screen {
                 /*drawCenteredString(
                     guiGraphics,
                 *///? } else if <26.1 {
-                /*guiGraphics.drawCenteredString(
-                *///? } else {
-                guiGraphics.centeredText(
-                //? }
+                guiGraphics.drawCenteredString(
+                //? } else {
+                /*guiGraphics.centeredText(
+                *///? }
                         Minecraft.getInstance().font,
                         Component.translatable("perky.not_enough_worth", selectedItems.getWorth()).withStyle(ChatFormatting.RED),
                         guiGraphicsWidth/2,
@@ -269,10 +269,10 @@ public class PerkyScreen extends Screen {
     }
 
     //? if >=26.1 {
-    public static void simpleBlit(PPIdentifier identifier, GuiGraphicsExtractor graphics, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
-    //? } else if >1.19 {
-    /*public static void simpleBlit(PPIdentifier identifier, GuiGraphics graphics, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
-    *///? } else {
+    /*public static void simpleBlit(PPIdentifier identifier, GuiGraphicsExtractor graphics, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
+    *///? } else if >1.19 {
+    public static void simpleBlit(PPIdentifier identifier, GuiGraphics graphics, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
+    //? } else {
     /*public static void simpleBlit(PPIdentifier identifier, PoseStack stack, int x, int y, int endX, int endY, int textureWidth, int textureHeight) {
     *///? }
 
@@ -328,18 +328,18 @@ public class PerkyScreen extends Screen {
 
     //? if >=26.1 {
     
-    public static void renderPerkyTooltip(GuiGraphicsExtractor graphics, PerkyItem item, PPIdentifier id, int perkX, int perkY, int perkEndX, int perkEndY, int mouseX, int mouseY) {
+    /*public static void renderPerkyTooltip(GuiGraphicsExtractor graphics, PerkyItem item, PPIdentifier id, int perkX, int perkY, int perkEndX, int perkEndY, int mouseX, int mouseY) {
      
-    //? } else {
-    /*public static void renderPerkyTooltip(
+    *///? } else {
+    public static void renderPerkyTooltip(
             //? if >1.19
             GuiGraphics graphics,
             //? if <=1.19 {
-            /^Screen graphics,
+            /*Screen graphics,
             PoseStack stack,
-            ^///? }
+            *///? }
             PerkyItem item, PPIdentifier id, int perkX, int perkY, int perkEndX, int perkEndY, int mouseX, int mouseY) {
-    *///? }
+    //? }
         graphics.fill(
                 //? if <=1.19
                 //stack,

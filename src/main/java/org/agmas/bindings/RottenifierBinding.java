@@ -21,10 +21,9 @@ public class RottenifierBinding extends PerkyItem {
         if (
             //? if >=1.21.1 {
             stack.is(ConventionalItemTags.RAW_MEAT_FOODS) ||
-            stack.is(ConventionalItemTags.RAW_FISH_FOODS)
-            //? } else {
-            /*false
-             *///? }
+            stack.is(ConventionalItemTags.RAW_FISH_FOODS) ||
+            //? }
+            stack.is(ModTags.RAW_MEATS)
         ) {
             return player.getRandom().nextBoolean() ? Items.ROTTEN_FLESH : Items.SPIDER_EYE;
         }

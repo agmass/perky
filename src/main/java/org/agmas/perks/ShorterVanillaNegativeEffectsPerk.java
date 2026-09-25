@@ -38,7 +38,7 @@ public class ShorterVanillaNegativeEffectsPerk extends PerkyItem {
                 return 0.1f;
             }
         }
-        return -1;
+        return 1;
     }
 
 }

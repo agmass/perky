@@ -21,10 +21,12 @@ public class ChangeFoodComponentOldMixin {
 			if (attachment == null) continue;
 			Item overrideItem = attachment.overrideFoodData(itemStack,(LivingEntity) (Object)this);
 			if (overrideItem != null) {
-				return overrideItem.getDefaultInstance();
+				original.call(level,overrideItem.getDefaultInstance());
+				itemStack.shrink(1);
+				return itemStack;
 			}
 		}
-		return itemStack;
+		return original.call(level,itemStack);
 	}
 	*///? }
 

@@ -22,6 +22,7 @@ public class SpongePerk extends PerkyItem {
 
     public SpongePerk() {
         super(1);
+        staticModifiers = false;
     }
 
     @Override
@@ -49,8 +50,6 @@ public class SpongePerk extends PerkyItem {
                         )
             );
             attributes.add(attributePair);
-            livingEntity.getAttribute(Attributes.SCALE).removeModifier(attributePair.modifier);
-            livingEntity.getAttribute(Attributes.SCALE).addPermanentModifier(attributePair.modifier);
         } else if (timeInWater <= 0) {
             timeInWater = 0;
 

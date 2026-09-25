@@ -10,11 +10,11 @@ public class ModRegistries {
     public static final ResourceKey<Registry<PerkyItem>> PERKY_ITEM_KEY = PPRegistrar.createRegistryKey("perky_item");
     public static final Registry<PerkyItem> PERKY_ITEM =
             //? if <26.1 {
-            /*FabricRegistryBuilder.createSimple(PERKY_ITEM_KEY)
-            *///? } else {
+            FabricRegistryBuilder.createSimple(PERKY_ITEM_KEY)
+            //? } else {
             
-            FabricRegistryBuilder.create(PERKY_ITEM_KEY)
-            //? }
+            /*FabricRegistryBuilder.create(PERKY_ITEM_KEY)
+            *///? }
             .buildAndRegister();
 
     public static void init() {

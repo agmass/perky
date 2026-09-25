@@ -5,10 +5,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.attributes.*;
 import org.agmas.attachment.PerkyItem;
-import org.agmas.bindings.CannibalBinding;
-import org.agmas.bindings.HalfStackSizeBinding;
-import org.agmas.bindings.NoArmBinding;
-import org.agmas.bindings.RottenifierBinding;
+import org.agmas.bindings.*;
 import org.agmas.perks.*;
 import org.agmas.porting.PPIdentifier;
 import org.w3c.dom.Attr;
@@ -74,6 +71,22 @@ public class PerkyItems {
         Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("picky_eater").id,
                 new RottenifierBinding());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("empty_stomach").id,
+                new EmptyStomachPerk());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("grime_filled").id,
+                new MoreLootRollsPerk());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("slimey").id,
+                new SlimeyInventoryPerk());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("nyctophobia").id,
+                new NyctophobiaBinding());
 
         //? if >1.21.1 {
         
