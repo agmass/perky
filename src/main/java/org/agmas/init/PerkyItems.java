@@ -65,10 +65,6 @@ public class PerkyItems {
                 new CannibalBinding());
 
         Registry.register(ModRegistries.PERKY_ITEM,
-                PPIdentifier.of("midas_touch").id,
-                new MidasTouchPerk());
-
-        Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("picky_eater").id,
                 new RottenifierBinding());
 
