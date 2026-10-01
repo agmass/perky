@@ -126,6 +126,12 @@ public class PerkyTagDatagen {
         protected void addTags(HolderLookup.Provider provider) {
             //? if >1.21.1
             add(PerkyItems.FLAMMABLE, ModTags.INCOMPATIBLE_LIGHTER);
+
+            add(PerkyItems.UNFORTUNATE, ModTags.INCOMPATIBLE_FORTUNE);
+            add(PerkyItems.GRIME_FILLED, ModTags.INCOMPATIBLE_FORTUNE);
+
+            add(PerkyItems.WITCHS_CURSE, ModTags.INCOMPATIBLE_POTION_TIME);
+            add(PerkyItems.EXTENT, ModTags.INCOMPATIBLE_POTION_TIME);
         }
 
         public void add(PerkyItem item, TagKey<PerkyItem> tag) {

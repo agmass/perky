@@ -54,7 +54,6 @@ public class ConsoleBlockEntityRenderer implements BlockEntityRenderer<ConsoleBl
     public ConsoleBlockEntityRenderState getRenderState(ConsoleBlockEntity blockEntity, ConsoleBlockEntityRenderState consoleBlockEntityRenderState, float f) {
         consoleBlockEntityRenderState.shouldShowFillant = blockEntity.hasBottleAttached;
         consoleBlockEntityRenderState.direction = blockEntity.direction;
-        consoleBlockEntityRenderState.animationTimestamp = blockEntity.animationTicks;
         consoleBlockEntityRenderState.tickDelta = f;
         return consoleBlockEntityRenderState;
     }
@@ -65,7 +64,7 @@ public class ConsoleBlockEntityRenderer implements BlockEntityRenderer<ConsoleBl
     public void submit(ConsoleBlockEntityRenderState blockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         model.resetPose();
         model.setupAnim(blockEntityRenderState);
-        Direction facing = blockEntityRenderState.direction.getOpposite();
+        Direction facing = blockEntityRenderState.direction;
         poseStack.mulPose(
                 Axis.ZP.rotationDegrees(180)
         );
@@ -74,16 +73,16 @@ public class ConsoleBlockEntityRenderer implements BlockEntityRenderer<ConsoleBl
         );
         poseStack.translate(0,-1.5,0);
         if (facing.equals(Direction.SOUTH)) {
-            poseStack.translate(-1,0,0.5);
+            poseStack.translate(-0.5,0,0.5);
         }
         if (facing.equals(Direction.WEST)) {
-            poseStack.translate(-1,0,-0.5);
+            poseStack.translate(-0.5,0,-0.5);
         }
         if (facing.equals(Direction.EAST)) {
-            poseStack.translate(0,0,0.5);
+            poseStack.translate(0.5,0,0.5);
         }
         if (facing.equals(Direction.NORTH)) {
-            poseStack.translate(0,0,-0.5);
+            poseStack.translate(0.5,0,-0.5);
         }
 
         //? if <26.1 {

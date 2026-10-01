@@ -15,6 +15,7 @@
     "ChangeStackSizeMixin",
     "ChangeStackSizeNewVersionMixin",
     "DontAllowUseMixin",
+    "NeutralMobMixin",
     "PerkModifyDamageMixin",
     "PerkModifyTridentRiptideMixin",
     "PerkyTickMixin",

@@ -31,21 +31,15 @@ public class ConsoleBlockEntity extends BlockEntity {
     public Direction direction;
     public BloodstreamAttachment attachedBlood = new BloodstreamAttachment();
     public boolean hasBottleAttached = false;
-    public long animationTicks = 0;
 
     public ConsoleBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModEntities.CONSOLE_BLOCK_ENTITY, blockPos, blockState);
         direction = blockState.getValue(HorizontalDirectionalBlock.FACING);
-        shouldRenderModel = blockState.getValue(ConsoleBlock.PART) == ConsoleBlock.ConsoleBlockPart.LOWER_LEFT;
+        shouldRenderModel = blockState.getValue(ConsoleBlock.PART) == ConsoleBlock.ConsoleBlockPart.LOWER;
     }
 
 
 
-    @Override
-    public boolean triggerEvent(int b0, int b1) {
-        animationTicks = (int) level.getGameTime();
-        return true;
-    }
 
     //? if >1.21.1 {
     @Override

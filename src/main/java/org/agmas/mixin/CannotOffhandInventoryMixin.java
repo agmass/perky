@@ -53,6 +53,7 @@ public class CannotOffhandInventoryMixin {
 			@Override
 			public boolean isActive() {
 				for (PerkyItem attachment : Perky.getAttachments(player)) {
+					if (attachment == null) continue;
 					if (!attachment.shouldRenderPart("offArm")) {
 						return false;
 					}

@@ -44,7 +44,7 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
 
     public ConsoleBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(PART, ConsoleBlockPart.LOWER_LEFT).setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(PART, ConsoleBlockPart.LOWER).setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -75,35 +75,16 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
         if (state.getBlock() instanceof ConsoleParentBlock) {
             return pos;
         }
-        switch (state.getValue(PART)) {
-            case LOWER_LEFT -> {
-                return pos;
-            }
-            case UPPER_LEFT -> {
-                return pos.below(1);
-            }
-            case LOWER_RIGHT -> {
-                return pos.relative(state.getValue(FACING).getCounterClockWise());
-            }
-            case UPPER_RIGHT -> {
-                return pos.relative(state.getValue(FACING).getCounterClockWise()).below(1);
-            }
-        }
-        return null;
+        return pos.below();
     }
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
         Direction direction = blockPlaceContext.getHorizontalDirection();
         BlockPos blockPos = blockPlaceContext.getClickedPos();
-        BlockPos blockPos2 = blockPos.relative(direction.getClockWise());
-        BlockPos blockPos3 = blockPos.above();
-        BlockPos blockPos4 = blockPos2.above();
+        BlockPos blockPos2 = blockPos.above();
         Level level = blockPlaceContext.getLevel();
-        return
-                ((level.getBlockState(blockPos2).canBeReplaced(blockPlaceContext) && level.getWorldBorder().isWithinBounds(blockPos2)) &&
-                        (level.getBlockState(blockPos3).canBeReplaced(blockPlaceContext) && level.getWorldBorder().isWithinBounds(blockPos3)) &&
-                        (level.getBlockState(blockPos4).canBeReplaced(blockPlaceContext) && level.getWorldBorder().isWithinBounds(blockPos4)))
+        return (level.getBlockState(blockPos2).canBeReplaced(blockPlaceContext) && level.getWorldBorder().isWithinBounds(blockPos2))
                         ? (BlockState) this.defaultBlockState().setValue(FACING, direction) : null;
     }
 
@@ -111,12 +92,8 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
         if (!level.isClientSide()) {
-            level.setBlock(blockPos.above(), (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER_LEFT).setValue(FACING, blockState.getValue(FACING)), 3);
-            BlockPos blockPos2 = blockPos.relative((Direction) blockState.getValue(FACING).getClockWise());
-            level.setBlock(blockPos2, (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.LOWER_RIGHT).setValue(FACING, blockState.getValue(FACING)), 3);
-            BlockPos blockPos3 = blockPos2.above();
-            level.setBlock(blockPos3, (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER_RIGHT).setValue(FACING, blockState.getValue(FACING)), 3);
-            level.updateNeighborsAt(blockPos, Blocks.AIR);
+            level.setBlock(blockPos.above(), (BlockState) ModBlocks.CONSOLE_CHILD.defaultBlockState().setValue(PART, ConsoleBlockPart.UPPER).setValue(FACING, blockState.getValue(FACING)), 3);
+            BlockPos blockPos2 = blockPos.relative((Direction) blockState.getValue(FACING));
             blockState.updateNeighbourShapes(level, blockPos, 3);
         }
     }
@@ -133,23 +110,8 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
     protected BlockState updateShape(BlockState blockState, LevelReader levelReader, ScheduledTickAccess scheduledTickAccess, BlockPos blockPos, Direction direction, BlockPos blockPos2, BlockState blockState2, RandomSource randomSource) {
     //? }
 
-        Direction adjacent = blockState.getValue(FACING);
-        Direction adjacentVertical;
-        if (blockState.getValue(PART) == ConsoleBlockPart.LOWER_LEFT || blockState.getValue(PART) == ConsoleBlockPart.UPPER_LEFT) {
-            adjacent = adjacent.getClockWise();
-        } else {
-            adjacent = adjacent.getCounterClockWise();
-        }
-
-        if (blockState.getValue(PART) == ConsoleBlockPart.UPPER_LEFT || blockState.getValue(PART) == ConsoleBlockPart.UPPER_RIGHT) {
-            adjacentVertical = Direction.DOWN;
-        } else {
-            adjacentVertical = Direction.UP;
-        }
-
-        if (direction == adjacentVertical || direction == adjacent) {
-            if (!blockState2.is(ModBlocks.CONSOLE) && !blockState2.is(ModBlocks.CONSOLE_CHILD))
-                return Blocks.AIR.defaultBlockState();
+        if (!(blockState2.getBlock() instanceof ConsoleBlock) && ((blockState.getValue(PART) == ConsoleBlockPart.LOWER && direction == Direction.UP) || (blockState.getValue(PART) == ConsoleBlockPart.UPPER && direction == Direction.DOWN))) {
+            return Blocks.AIR.defaultBlockState();
         }
 
         //? if >1.21.1 {
@@ -213,10 +175,8 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
     }
 
     public enum ConsoleBlockPart implements StringRepresentable {
-        UPPER_LEFT("upper_left"),
-        UPPER_RIGHT("upper_right"),
-        LOWER_LEFT("lower_left"),
-        LOWER_RIGHT("lower_right");
+        UPPER("upper"),
+        LOWER("lower");
 
 
         private final String name;

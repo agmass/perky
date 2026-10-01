@@ -21,6 +21,12 @@ public class PerkyItems {
     public static PerkyItem SINGLEHANDED;
     public static PerkyItem FLAMMABLE;
 
+    public static PerkyItem UNFORTUNATE;
+    public static PerkyItem GRIME_FILLED;
+
+    public static PerkyItem WITCHS_CURSE;
+    public static PerkyItem EXTENT;
+
 
     public static void init() {
 
@@ -40,11 +46,11 @@ public class PerkyItems {
                 PPIdentifier.of("mob_boss").id,
                 new NoTargetPerk());
 
-        Registry.register(ModRegistries.PERKY_ITEM,
+        EXTENT = Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("extent").id,
                 new PotionTimerMultiplierPerkyItem(2, 2));
 
-        Registry.register(ModRegistries.PERKY_ITEM,
+        WITCHS_CURSE = Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("witchs_curse").id,
                 new PotionTimerMultiplierPerkyItem(-2, 0.5f));
 
@@ -72,9 +78,13 @@ public class PerkyItems {
                 PPIdentifier.of("empty_stomach").id,
                 new EmptyStomachPerk());
 
-        Registry.register(ModRegistries.PERKY_ITEM,
+        GRIME_FILLED = Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("grime_filled").id,
-                new MoreLootRollsPerk());
+                new MoreLootRollsPerk(2, 2));
+
+        UNFORTUNATE = Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("unfortunate").id,
+                new MoreLootRollsPerk(-1, -0.5f));
 
         Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("slimey").id,
@@ -84,14 +94,15 @@ public class PerkyItems {
                 PPIdentifier.of("nyctophobia").id,
                 new NyctophobiaBinding());
 
-        //? if >1.21.1 {
-        
-            
+        Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("reputable").id,
+                new ReputableBinding());
 
-            Registry.register(ModRegistries.PERKY_ITEM,
+        Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("builders_pockets").id,
                 new MoreBuildingStackPerk());
 
+        //? if >1.21.1 {
             Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("dexterity").id,
                 new PerkyItem(1, List.of(

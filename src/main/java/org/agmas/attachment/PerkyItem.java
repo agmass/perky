@@ -42,6 +42,10 @@ public class PerkyItem {
         attributes = permanentAttributes;
     }
 
+    public float multiplyVillagerPrices() {
+        return 1;
+    }
+
     public int bonusRolls(LootContext params, int originalRolls) {
         return 0;
     }
@@ -49,6 +53,8 @@ public class PerkyItem {
     public CancellableResult canRiptide(Player player) { return CancellableResult.PASS;}
 
     public boolean canAngerMob(LivingEntity holder, Mob mob) { return true;}
+
+    public boolean isAngryAt(LivingEntity holder, Mob mob) { return false;}
 
     public boolean shouldRenderPart(String partName) {
         return true;

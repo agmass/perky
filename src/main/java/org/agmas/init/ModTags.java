@@ -10,6 +10,9 @@ import org.agmas.porting.PPIdentifier;
 public class ModTags {
 
     public static final TagKey<PerkyItem> INCOMPATIBLE_LIGHTER = TagKey.create(ModRegistries.PERKY_ITEM_KEY, PPIdentifier.of("incompatible_lighter").id);
+    public static final TagKey<PerkyItem> INCOMPATIBLE_FORTUNE = TagKey.create(ModRegistries.PERKY_ITEM_KEY, PPIdentifier.of("incompatible_fortune").id);
+    public static final TagKey<PerkyItem> INCOMPATIBLE_POTION_TIME = TagKey.create(ModRegistries.PERKY_ITEM_KEY, PPIdentifier.of("incompatible_potion_time").id);
+
     public static final TagKey<Item> MEATS = TagKey.create(Registries.ITEM, PPIdentifier.of("meats").id);
     public static final TagKey<Item> RAW_MEATS = TagKey.create(Registries.ITEM, PPIdentifier.of("raw_meats").id);
 

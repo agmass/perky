@@ -193,9 +193,9 @@ public class Perky implements ModInitializer {
 					/*if (livingEntity.getAttribute(attr).hasModifier(attribute.modifier)) {
 						*///? }
 						//? if >1.20.4
-						livingEntity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(attribute.modifier);
+						livingEntity.getAttribute(attr).removeModifier(attribute.modifier);
 						//? if <=1.20.4
-						//livingEntity.getAttribute(Attributes.MOVEMENT_SPEED).removePermanentModifier(attribute.modifier.getId());
+						//livingEntity.getAttribute(attr).removePermanentModifier(attribute.modifier.getId());
 					}
 				}
 			}
@@ -207,7 +207,7 @@ public class Perky implements ModInitializer {
 			AttachmentTargetImpl attachmentTarget = ((AttachmentTargetImpl) livingEntity);
 
 			//? if >=26.2 {
-			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, new AttachmentChange(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment));
+			/*attachmentTarget.f	abric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, new AttachmentChange(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment));
 			*///? } else if =26.1 {
 			/*attachmentTarget.fabric_syncChange(ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, AttachmentChange.create(attachmentTarget.fabric_getSyncTargetInfo(), ModAttachments.PERKY_ATTACHMENT.PERKY_ATTACHMENT, playerAttachment, attachmentTarget.fabric_getRegistryAccess()));
 			 *///? } else if =1.21.11 {

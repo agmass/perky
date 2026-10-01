@@ -73,8 +73,8 @@ public class PerkyScreen extends Screen {
         int guiGraphicsWidth = width;
         int guiGraphicsHeight = height;
     *///? }
-        int width_ = Math.min(guiGraphicsWidth/2, guiGraphicsHeight);
-        int height_ = (int)(width_ *0.736363636f);
+        int width_ = 220;
+        int height_ = 162;
 
         int x = (guiGraphicsWidth/2) - (width_ /2);
         int y = (guiGraphicsHeight/2) - (height_ /2);
@@ -254,9 +254,15 @@ public class PerkyScreen extends Screen {
             PerkyItem perkyItem = resourceKeyPerkyItemEntry.getValue();
             for (PerkyItem appliedItem : selectedItems.appliedItems) {
                 if (appliedItem == null) continue;
-                if (appliedItem.exclusive() == null) continue;
-                if (ModRegistries.PERKY_ITEM.wrapAsHolder(perkyItem).is(appliedItem.exclusive())) {
-                    incompatibleCache.add(perkyItem);
+                if (appliedItem.exclusive() != null) {
+                    if (ModRegistries.PERKY_ITEM.wrapAsHolder(perkyItem).is(appliedItem.exclusive())) {
+                        incompatibleCache.add(perkyItem);
+                    }
+                }
+                if (perkyItem.exclusive() != null) {
+                    if (ModRegistries.PERKY_ITEM.wrapAsHolder(appliedItem).is(perkyItem.exclusive())) {
+                        incompatibleCache.add(perkyItem);
+                    }
                 }
             }
         }

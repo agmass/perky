@@ -47,6 +47,8 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         translationBuilder.add(PerkyCommands.REMOVE_ALREADY_HAS_ITEM, "%2$s does not have %1$s %3$s");
         translationBuilder.add(PerkyCommands.LIST, "%s's perk(s) and binding(s): %s");
 
+        translationBuilder.add(ModBlocks.CONSOLE, "Console");
+
         translationBuilder.add(ModItems.BLOOD_BOTTLE, "Blood Bottle");
         translationBuilder.add(ModItems.SYRINGE, "Syringe");
 
@@ -93,6 +95,18 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         translationBuilder.add("perky.binding.perky.witchs_curse", "Witch's Curse");
         translationBuilder.add("perky.binding.perky.witchs_curse.desc", "Potions last a shorter amount of time.");
 
+        translationBuilder.add("perky.binding.perky.cannibal", "Cannibal");
+        translationBuilder.add("perky.binding.perky.cannibal.desc", "You can only eat meat.");
+
+        translationBuilder.add("perky.binding.perky.picky_eater", "Picky Eater");
+        translationBuilder.add("perky.binding.perky.picky_eater.desc", "Eating raw foods give debuffs.");
+
+        translationBuilder.add("perky.binding.perky.reputable", "Reputable");
+        translationBuilder.add("perky.binding.perky.reputable.desc", "Villagers have increased prices and iron golems attack you.");
+
+        translationBuilder.add("perky.binding.perky.unfortunate", "Unfortunate");
+        translationBuilder.add("perky.binding.perky.unfortunate.desc", "Chests and mobs provide less loot.");
+
         translationBuilder.add("perky.perk.perky.empty_stomach", "Empty Stomach");
         translationBuilder.add("perky.perk.perky.empty_stomach.desc", "Food is always edible.");
 
@@ -115,6 +129,7 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         translationBuilder.add("perky.binding.perky.midas_touch.desc", "Take damage when in the dark.");
 
         translationBuilder.add("death.attack.nyctophobia", "%s stared into the shadows");
+        translationBuilder.add("death.attack.nyctophobia.player", "%s stared into the shadows of %s");
 
         translationBuilder.add("perky.bloodstream", "Bloodstream");
         translationBuilder.add("perky.worth", "Worth %s %ss.");
