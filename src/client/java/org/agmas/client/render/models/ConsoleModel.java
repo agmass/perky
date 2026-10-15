@@ -78,7 +78,7 @@ public class ConsoleModel extends Model
 							   //? if >=1.21.1
 							   int
 							   k) {
-		console.render(poseStack,vertexConsumer,i,j,
+		group.render(poseStack,vertexConsumer,i,j,
 				//? if <1.21.1
 				//f,g,h,
 				k);

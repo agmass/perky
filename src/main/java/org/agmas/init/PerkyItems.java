@@ -59,6 +59,10 @@ public class PerkyItems {
                 new HalfStackSizeBinding());
 
         Registry.register(ModRegistries.PERKY_ITEM,
+                PPIdentifier.of("midas_touch").id,
+                new MidasTouchPerk());
+
+        Registry.register(ModRegistries.PERKY_ITEM,
                 PPIdentifier.of("cure").id,
                 new ShorterVanillaNegativeEffectsPerk(1));
 
