@@ -57,14 +57,14 @@ public class ConsoleBlock extends HorizontalDirectionalBlock {
         return blockEntity.triggerEvent(i, j);
     }
 
-    //? if >1.20.1 {
-    public static final MapCodec<ConsoleBlock> CODEC = simpleCodec(ConsoleBlock::new);
+    //? if >1.20.1 && <26.3 {
+    /*public static final MapCodec<ConsoleBlock> CODEC = simpleCodec(ConsoleBlock::new);
 
     @Override
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return CODEC;
     }
-    //?}
+    *///?}
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

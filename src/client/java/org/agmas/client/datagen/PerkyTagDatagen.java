@@ -1,12 +1,12 @@
 package org.agmas.client.datagen;
 
 //? if >=26.1 {
-/*import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
-*///? } else {
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+//? } else {
+/*import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-//? }
+*///? }
 
 import net.minecraft.core.registries.BuiltInRegistries;
 
@@ -32,17 +32,17 @@ import java.util.concurrent.CompletableFuture;
 public class PerkyTagDatagen {
 
     //? if >=26.1 {
-    /*public static final class ItemTags extends FabricTagsProvider.ItemTagsProvider {
-     *///?} else {
-    public static final class ItemTags extends FabricTagProvider.ItemTagProvider {
-        //? }
+    public static final class ItemTags extends FabricTagsProvider.ItemTagsProvider {
+     //?} else {
+    /*public static final class ItemTags extends FabricTagProvider.ItemTagProvider {
+        *///? }
 
 
         //? if >=26.1 {
-        /*public ItemTags(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-         *///?} else {
-        public ItemTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-            //? }
+        public ItemTags(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+         //?} else {
+        /*public ItemTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+            *///? }
             super(output, registriesFuture);
         }
 
@@ -78,12 +78,12 @@ public class PerkyTagDatagen {
 
         public void add(Item item, TagKey<Item> tag) {
             //? if >=26.2 {
-            /*tag(tag)
+            tag(tag)
                     .add(ResourceKey.create(Registries.ITEM, BuiltInRegistries.ITEM.getKey(item)));
-            *///? } else if >1.21.4 {
-            valueLookupBuilder(tag)
+            //? } else if >1.21.4 {
+            /*valueLookupBuilder(tag)
                     .add(item);
-            //? } else{
+            *///? } else{
             /*tag(tag)
                     .add(BuiltInRegistries.ITEM.getResourceKey(item).get());
             *///? }
@@ -91,16 +91,16 @@ public class PerkyTagDatagen {
 
         public void addList(List<Item> list, TagKey<Item> tag) {
             //? if >=26.2 {
-            /*TagAppender<Item> itemTagAppender = tag(tag);
-             *///? } else  if >1.21.4 {
-            TagAppender<Item, Item> itemTagAppender = valueLookupBuilder(tag);
-             //? }
+            TagAppender<Item> itemTagAppender = tag(tag);
+             //? } else  if >1.21.4 {
+            /*TagAppender<Item, Item> itemTagAppender = valueLookupBuilder(tag);
+             *///? }
             for (Item item : list) {
                 //? if >=26.2 {
-                /*itemTagAppender.add(ResourceKey.create(Registries.ITEM, BuiltInRegistries.ITEM.getKey(item)));
-                 *///? } else  if >1.21.4 {
-                itemTagAppender.add(item);
-                 //? } else {
+                itemTagAppender.add(ResourceKey.create(Registries.ITEM, BuiltInRegistries.ITEM.getKey(item)));
+                 //? } else  if >1.21.4 {
+                /*itemTagAppender.add(item);
+                 *///? } else {
                 /*tag(tag)
                         .add(BuiltInRegistries.ITEM.getResourceKey(item).get());
                 *///? }
@@ -109,16 +109,16 @@ public class PerkyTagDatagen {
     }
 
     //? if >=26.1 {
-    /*public static final class PerkyItemTags extends FabricTagsProvider<PerkyItem> {
-     *///?} else {
-    public static final class PerkyItemTags extends FabricTagProvider<PerkyItem> {
-        //?}
+    public static final class PerkyItemTags extends FabricTagsProvider<PerkyItem> {
+     //?} else {
+    /*public static final class PerkyItemTags extends FabricTagProvider<PerkyItem> {
+        *///?}
 
         //? if >=26.1 {
-        /*public PerkyItemTags(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-         *///? } else {
-        public PerkyItemTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-            //? }
+        public PerkyItemTags(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+         //? } else {
+        /*public PerkyItemTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+            *///? }
             super(output, ModRegistries.PERKY_ITEM_KEY, registriesFuture);
         }
 
@@ -146,16 +146,16 @@ public class PerkyTagDatagen {
     }
 
     //? if >=26.1 {
-    /*public static final class PerkyDamageTypeTags extends FabricTagsProvider<DamageType> {
-     *///?} else {
-    public static final class PerkyDamageTypeTags extends FabricTagProvider<DamageType> {
-        //?}
+    public static final class PerkyDamageTypeTags extends FabricTagsProvider<DamageType> {
+     //?} else {
+    /*public static final class PerkyDamageTypeTags extends FabricTagProvider<DamageType> {
+        *///?}
 
         //? if >=26.1 {
-        /*public PerkyDamageTypeTags(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-         *///? } else {
-        public PerkyDamageTypeTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-            //? }
+        public PerkyDamageTypeTags(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+         //? } else {
+        /*public PerkyDamageTypeTags(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+            *///? }
             super(output, Registries.DAMAGE_TYPE, registriesFuture);
         }
 
@@ -168,10 +168,10 @@ public class PerkyTagDatagen {
         public void add(ResourceKey<DamageType> item, TagKey<DamageType> tag) {
             //? if >=1.21.11 {
             builder(tag)
-                    .add(item);
+                    .addOptional(item);
             //? } else {
             /*getOrCreateRawBuilder(tag)
-                    .addElement(item.location());
+                    .addOptionalElement(item.location());
             *///? }
         }
     }

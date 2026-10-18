@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public interface NeutralMobMixin {
     @WrapMethod(method = "isAngryAt")
     default boolean makeDropsEven(LivingEntity livingEntity,
-                                  //? if >1.19
+                                  //? if >1.21.1
                                   ServerLevel serverLevel,
                                   Operation<Boolean> original) {
         for (PerkyItem attachment : Perky.getAttachments(livingEntity)) {
@@ -24,7 +24,7 @@ public interface NeutralMobMixin {
             }
         }
         return original.call(livingEntity
-                //? if >1.19
+                //? if >1.21.1
                 ,serverLevel
         );
     }

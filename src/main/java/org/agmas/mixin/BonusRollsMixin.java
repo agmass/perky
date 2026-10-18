@@ -7,7 +7,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+//? if <26.3
+//import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+//? if >=26.3
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
 import org.agmas.Perky;
 import org.agmas.attachment.PerkyItem;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,12 +18,22 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LootPool.class)
 public class BonusRollsMixin {
-    @WrapOperation(method = "addRandomItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/providers/number/NumberProvider;getInt(Lnet/minecraft/world/level/storage/loot/LootContext;)I"))
+    //? if <26.3 {
+    /*@WrapOperation(method = "addRandomItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/providers/number/NumberProvider;getInt(Lnet/minecraft/world/level/storage/loot/LootContext;)I"))
     public int makeDropsEven(NumberProvider instance, LootContext lootContext, Operation<Integer> original) {
+    *///? } else if >=26.3 {
+    @WrapOperation(method = "addRandomItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/providers/number/ints/ContextIntProvider;getInt(Lnet/minecraft/world/level/storage/loot/LootContext;)I"))
+    public int makeDropsEven(ContextIntProvider instance, LootContext lootContext, Operation<Integer> original) {
+    //? }
         int rolls = original.call(instance,lootContext);
         //? if >1.21.1 {
         if (lootContext.hasParameter(LootContextParams.THIS_ENTITY) && !lootContext.hasParameter(LootContextParams.BLOCK_STATE)) {
-            Entity en = lootContext.getParameter(LootContextParams.THIS_ENTITY);
+
+            Entity en =
+                    //? if >26.3
+                    lootContext.getOptional(LootContextParams.THIS_ENTITY);
+                    //? if <26.3
+                    //lootContext.getParameter(LootContextParams.THIS_ENTITY);
         //? } else {
         /*if (lootContext.hasParam(LootContextParams.THIS_ENTITY) && !lootContext.hasParam(LootContextParams.BLOCK_STATE)) {
             Entity en = lootContext.getParam(LootContextParams.THIS_ENTITY);
@@ -34,7 +47,11 @@ public class BonusRollsMixin {
         }
         //? if >1.21.1 {
         if (lootContext.hasParameter(LootContextParams.ATTACKING_ENTITY)) {
-            Entity en = lootContext.getParameter(LootContextParams.ATTACKING_ENTITY);
+            Entity en =
+                    //? if >26.3
+                    lootContext.getOptional(LootContextParams.ATTACKING_ENTITY);
+                    //? if <26.3
+                    //lootContext.getParameter(LootContextParams.ATTACKING_ENTITY);
         //? } else if =1.21.1 {
         /*if (lootContext.hasParam(LootContextParams.ATTACKING_ENTITY)) {
             Entity en = lootContext.getParam(LootContextParams.ATTACKING_ENTITY);

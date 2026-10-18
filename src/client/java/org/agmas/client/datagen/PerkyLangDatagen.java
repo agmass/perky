@@ -1,10 +1,10 @@
 package org.agmas.client.datagen;
 
 //? if >=26.1 {
-/*import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
- *///? } else {
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-//? }
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+ //? } else {
+/*import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+*///? }
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
@@ -18,14 +18,14 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
 
 
     //? if >=26.1 {
-    /*public PerkyLangDatagen(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public PerkyLangDatagen(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
-     *///? } else if >=1.21.1 {
-    public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+     //? } else if >=1.21.1 {
+    /*public PerkyLangDatagen(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
-    //? } else {
+    *///? } else {
     /*public PerkyLangDatagen(FabricDataOutput dataOutput) {
         super(dataOutput);
     }
@@ -48,6 +48,8 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         translationBuilder.add(PerkyCommands.LIST, "%s's perk(s) and binding(s): %s");
 
         translationBuilder.add(ModBlocks.CONSOLE, "Console");
+        translationBuilder.add(ModBlocks.GRIDDIAN_TILES, "Griddian Tiles");
+        translationBuilder.add(ModBlocks.KNUCKLIUM_BLOCK, "Knucklium Block");
 
         translationBuilder.add(ModItems.BLOOD_BOTTLE, "Blood Bottle");
         translationBuilder.add(ModItems.SYRINGE, "Syringe");
@@ -132,6 +134,7 @@ public class PerkyLangDatagen extends FabricLanguageProvider {
         translationBuilder.add("death.attack.nyctophobia.player", "%s stared into the shadows of %s");
 
         translationBuilder.add("perky.bloodstream", "Bloodstream");
+        translationBuilder.add("perky.no_bottle", "Requires Glass Bottle");
         translationBuilder.add("perky.worth", "Worth %s %ss.");
         translationBuilder.add("perky.not_enough_worth", "%s binding points required.");
     }

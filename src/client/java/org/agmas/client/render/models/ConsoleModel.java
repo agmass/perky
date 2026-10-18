@@ -6,9 +6,9 @@ package org.agmas.client.render.models;
 // Paste this class into your mod and generate all required imports
 
 //? if <26.1 {
-import com.mojang.blaze3d.vertex.PoseStack;
+/*import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-//? }
+*///? }
 import net.fabricmc.loader.impl.util.log.Log;
 import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.client.Minecraft;
@@ -34,11 +34,13 @@ public class ConsoleModel extends Model
 	private final ModelPart fillant;
 
 	public ConsoleModel(ModelPart root) {
-		//? if >=26.1 {
+		//? if >=26.3 {
+		super(root, RenderTypes::entityTranslucentCull);
+		//? } else if >=26.1 {
 		/*super(root, RenderTypes::entityTranslucentCullItemTarget);
 		*///? } else if >1.21.4 {
-		super(root, RenderTypes::itemEntityTranslucentCull);
-		//? } else {
+		/*super(root, RenderTypes::itemEntityTranslucentCull);
+		*///? } else {
 		/*super(RenderType::itemEntityTranslucentCull);
 		 *///? }
 		this.group = root.getChild("group");
@@ -78,7 +80,7 @@ public class ConsoleModel extends Model
 							   //? if >=1.21.1
 							   int
 							   k) {
-		console.render(poseStack,vertexConsumer,i,j,
+		group.render(poseStack,vertexConsumer,i,j,
 				//? if <1.21.1
 				//f,g,h,
 				k);

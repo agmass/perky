@@ -71,7 +71,7 @@ public abstract class ChangeStackSizeMixin {
 
 
 	//? if <26.1 {
-	@Inject(method = "getMaxStackSize", at = @At("RETURN"), cancellable = true)
+	/*@Inject(method = "getMaxStackSize", at = @At("RETURN"), cancellable = true)
 	public void stack(CallbackInfoReturnable<Integer> cir) {
 		if (ModComponents.STACK_SIZE_CHANGED_BY_PERKS.has(((ItemStack) (Object)this))) {
 			int perkyStack = ModComponents.STACK_SIZE_CHANGED_BY_PERKS.get(((ItemStack) (Object) this));
@@ -81,5 +81,5 @@ public abstract class ChangeStackSizeMixin {
 			}
 		}
 	}
-	//? }
+	*///? }
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 //? if >=26.1 {
-/*import net.minecraft.world.item.ItemInstance;
+import net.minecraft.world.item.ItemInstance;
 @Mixin(ItemInstance.class)
 public interface ChangeStackSizeNewVersionMixin {
 	@Inject(method = "getMaxStackSize", at = @At("RETURN"), cancellable = true)
@@ -21,8 +21,8 @@ public interface ChangeStackSizeNewVersionMixin {
 		}
 	}
 }
-*///? } else {
-@Mixin(Item.class)
+//? } else {
+/*@Mixin(Item.class)
 public interface ChangeStackSizeNewVersionMixin {
 }
-//? }
+*///? }

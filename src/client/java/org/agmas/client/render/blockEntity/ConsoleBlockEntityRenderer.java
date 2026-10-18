@@ -3,7 +3,7 @@ package org.agmas.client.render.blockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 //? if <26.1
-import net.minecraft.client.renderer.MultiBufferSource;
+//import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 //? if >1.21.4
@@ -18,9 +18,9 @@ import org.agmas.client.render.models.ConsoleModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 //? if <26.1
-import net.minecraft.client.renderer.state.CameraRenderState;
+//import net.minecraft.client.renderer.state.CameraRenderState;
 //? if >=26.1
-//import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import org.jspecify.annotations.Nullable;
 //? } else {
 /*import net.minecraft.client.renderer.RenderType;
@@ -60,15 +60,23 @@ public class ConsoleBlockEntityRenderer implements BlockEntityRenderer<ConsoleBl
 
     //? if >=1.21.4 {
 
+
     @Override
     public void submit(ConsoleBlockEntityRenderState blockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         model.resetPose();
         model.setupAnim(blockEntityRenderState);
         Direction facing = blockEntityRenderState.direction;
-        poseStack.mulPose(
+        //? if <26.3
+        //poseStack.mulPose(
+        //? if >=26.3
+        poseStack.rotate(
                 Axis.ZP.rotationDegrees(180)
         );
-        poseStack.mulPose(
+        
+        //? if <26.3
+        //poseStack.mulPose(
+        //? if >=26.3
+        poseStack.rotate(
                 Axis.YP.rotationDegrees(facing.toYRot())
         );
         poseStack.translate(0,-1.5,0);
@@ -86,14 +94,20 @@ public class ConsoleBlockEntityRenderer implements BlockEntityRenderer<ConsoleBl
         }
 
         //? if <26.1 {
-        submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack,
+        /*submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack,
                 RenderTypes.itemEntityTranslucentCull(ConsoleModel.textureLocation.id),
                 blockEntityRenderState.lightCoords, OverlayTexture.NO_OVERLAY,0, null);
-        //? } else {
-        /*submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack,
-                RenderTypes.entityTranslucentCullItemTarget(ConsoleModel.textureLocation.id),
-                blockEntityRenderState.lightCoords, OverlayTexture.NO_OVERLAY,0, (ModelFeatureRenderer.CrumblingOverlay) null);
-        *///? }
+        *///? } else {
+        submitNodeCollector.submitModel(model,blockEntityRenderState,poseStack,
+                //? if <26.3
+                //RenderTypes.entityTranslucentCullItemTarget(ConsoleModel.textureLocation.id),
+                //? if >=26.3
+                RenderTypes.entityTranslucentCull(ConsoleModel.textureLocation.id),
+                blockEntityRenderState.lightCoords, OverlayTexture.NO_OVERLAY,0
+                //? if <26.3
+                //, (ModelFeatureRenderer.CrumblingOverlay) null
+        );
+        //? }
     }
     //? } else {
     /*public void render(ConsoleBlockEntity blockEntity, float f, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j) {
